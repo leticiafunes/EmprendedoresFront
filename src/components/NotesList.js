@@ -49,6 +49,7 @@ export default function NotesList() {
                            Edit
                         </Link>
                     </div>
+                    
                     <div 
                     className="card-body">
                         <p>{note.content}</p>
