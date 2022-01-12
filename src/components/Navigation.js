@@ -1,12 +1,13 @@
 import React from "react";
 import {Link} from 'react-router-dom'
+
 export default function Navigation() {
   return (
 
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
         <Link className="navbar-brand" to='/'>
-          NotesApp
+          Emprendedores
         </Link>
         <button
           className="navbar-toggler"
@@ -32,6 +33,9 @@ export default function Navigation() {
             </li>
             <li className="nav-item">
              <Link className='nav-link' to ="/uploadImage"> Upload Image </Link>
+            </li>
+            <li className="nav-item">
+            <Link className='nav-link' to ="/emprendedores">Emprendedores </Link>
             </li>
            
           </ul>

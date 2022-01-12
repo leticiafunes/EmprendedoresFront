@@ -40,7 +40,7 @@ export default function CreateNote(props) {
      
     const obtenerDatos = async () => {
       
-      const res_users = await axios.get("http://localhost:4001/api/users");
+      const res_users = await axios.get(process.env.REACT_APP_INITIAL_PATH + "/api/users");
       
       if (res_users.data) {
         setUsers({ 
@@ -53,8 +53,8 @@ export default function CreateNote(props) {
   
        if (id) {
    
-        const res = await axios.get(
-          "http://localhost:4001/api/notes/" + id
+        const res = await axios.get( process.env.REACT_APP_INITIAL_PATH +
+          "/api/notes/" + id
         );
   
         if (res.data) {     
@@ -125,7 +125,7 @@ export default function CreateNote(props) {
         author:  users.userSelected,
       };
       
-      await axios.put("http://localhost:4001/api/notes/" + edit._id, updateNote);
+      await axios.put(process.env.REACT_APP_INITIAL_PATH + "/api/notes/" + edit._id, updateNote);
     } else {
       const newNote = {
         title: nota.title,
@@ -133,7 +133,7 @@ export default function CreateNote(props) {
         date: nota.date,
         author: users.userSelected,
       };
-      await axios.post("http://localhost:4001/api/notes", newNote);
+      await axios.post(process.env.REACT_APP_INITIAL_PATH +"/api/notes", newNote);
     }
 
     window.location.href ='/';

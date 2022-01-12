@@ -24,7 +24,7 @@ export default function CreateUser() {
 
   const obtenerDatos = async () => {
   
-    const res = await axios.get('http://localhost:4001/api/users');
+    const res = await axios.get(process.env.REACT_APP_INITIAL_PATH +'/api/users');
     
         setUsers(res.data);
     
@@ -48,7 +48,7 @@ export default function CreateUser() {
 
       let newUser = { username: username, nombre: nombre.nombre, apellido:  nombre.apellido };
    
-       await axios.post ('http://localhost:4001/api/users', newUser)
+       await axios.post (process.env.REACT_APP_INITIAL_PATH +'/api/users', newUser)
 
       obtenerDatos ();
       
@@ -63,7 +63,7 @@ export default function CreateUser() {
   const borrarUser =  async (id) => {
 
    
-    await axios.delete ('http://localhost:4001/api/users/'+ id)
+    await axios.delete ('process.env.REACT_APP_INITIAL_PATH +/api/users/'+ id)
     
     obtenerDatos ();
     

@@ -1,0 +1,59 @@
+ <div className= "emprendedor-tarjeta" >
+    <div className="empre-imagen">              
+       <img className= "imagen-empre-chica" src= {{emprendedor.imagen}}  alt="Emprendedor"  data-open= {{emprendedor_id}}>            
+    </div>
+    <div className= "empre-marca" data-open="modal1" className="text">
+         <h2 className= "rubro" claves= "platería"> {{emprendedor_nombre}} </h2>
+    </div>             
+    <div className="claves oculto"> {{emprendedor_tags}} </div>  
+      
+  </div>  
+  
+  <div className="modal emprendedor-tarjeta-modal" id={{emprendedor_id}} > 
+    <div className="modal-dialog">
+      <header className="modal-header">
+         <img className= "imagen-empre-chica-modal" src= {{this.emprendedor_imagen}}  alt={{emprendedor_nombre}}>            
+         <button className="close-modal " id="cross-arriba" aria-label="close modal" data-close>  
+           <i className="far fa-times-circle icono-cerrar"></i>
+         </button>  
+      </header>
+      <div className="texto-modal">
+        <div>
+          <section className="modal-content">{{emprendedor_nombre}}</section>
+          <section className="modal-content">{{emprendedor_resena}}</section>
+        </div>
+        <div id="cross-abajo">
+          <button className="close-modal" aria-label="close modal" data-close>  
+            <i className="far fa-times-circle icono-cerrar"></i>
+          </button>  
+        </div>
+        
+      </div>
+
+      <footer className="modal-footer">
+                 
+         {{#if emprendedor_telefono}}
+           <i className="{{telefono_icono}}"></i>
+           <h3 className= "link_redes">{{emprendedor_telefono}}</h3>
+         {{/if}}
+         
+         {{#if emprendedor_mail}}
+           <i className= "{{mail_icono}}"></i>
+           <h3 className= "link_redes">{{emprendedor_mail}}</h3>
+         {{/if}}
+                  
+         {{#if emprendedor_facebook}}
+           <i className="{{facebook_icono}}"></i>
+           <a className= "link_redes" href={{emprendedor_facebook}} TARGET= "_BLANK">{{emprendedor_nombre}}</a>
+         {{/if}}
+
+         {{#if emprendedor_instagram}}
+           <i className="{{instagram_icono}}"></i>
+           <a className= "link_redes" href={{emprendedor_instagram}} TARGET= "_BLANK">{{emprendedor_nombre}}</a>
+         {{/if}}
+
+       </footer>   
+    </div>
+  </div>  
+ 
+ 

@@ -21,7 +21,7 @@ export default function NotesList() {
     const obtenerDatos = async () => {
      
 
-        const res = await axios.get("http://localhost:4001/api/notes");
+        const res = await axios.get(process.env.REACT_APP_INITIAL_PATH +"/api/notes");
         //const notes = res.data.map (user => user.username ) ; //filtro para que no cargue toda la info del request
         setNotes(res.data);
        
@@ -29,7 +29,7 @@ export default function NotesList() {
 
 
     const deleteNote = async (id) =>  {
-        await axios.delete ("http://localhost:4001/api/notes/" + id);
+        await axios.delete (process.env.REACT_APP_INITIAL_PATH +"/api/notes/" + id);
         obtenerDatos();
     }
 
@@ -45,7 +45,7 @@ export default function NotesList() {
                     className="card-header d-flex justify-content-between">
                         <h5>{note.title}</h5>
                      
-                        <Link className = "btn btn-secondary" to ={'/edit/'+ note._id}>
+                        <Link className = "btn btn-secondary btn-default" to ={'/edit/'+ note._id}>
                            Edit
                         </Link>
                     </div>
