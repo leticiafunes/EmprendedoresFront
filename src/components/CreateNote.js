@@ -147,6 +147,11 @@ export default function CreateNote(props) {
 
   return (
     <div className="col-md-6 offset-md-3">
+ 
+
+ 
+
+
       <div className="card card-body">
         
       

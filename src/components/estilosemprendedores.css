@@ -63,15 +63,28 @@
   
 .container {
   width: auto;
-  margin-bottom: 30px;
+  margin-bottom: 5px;
+  margin-top: 5px;
  
 
 }
 
 .btn-buscar {
-  display: flex;  
+ 
+  display: flex;
+  
   margin: 10px;
   margin-bottom: 10px;  
+  
+}
+
+.barraTareas {
+ 
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 10px;
+  margin-bottom: 10px;  
+  
 }
 
 .input-buscar {
@@ -142,6 +155,18 @@
     font-size: 18px;
     color: white;
     text-align: center;
+    font-weight: bold;
+    margin-top: 13px;
+    
+}
+
+.nombre_emprendimiento {
+  font-size: 18px;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 13px;
+  
 }
 
 .oculto {
@@ -197,25 +222,7 @@ button {
   border-radius: 5px;
 }
 
-.modal { 
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  padding-top: 80px;
-  background: var(--black);
-  cursor: pointer;
-  visibility: hidden;
-  opacity: 0;
-  transition: all 0.35s ease-in;
-  z-index: 100;
- 
-}
+
 /*CUSTOM VARIABLES HERE*/
 
 .modal-dialog {
@@ -256,11 +263,7 @@ button {
   margin-top: 1rem;
 }
 
-.modal {
-  visibility: hidden;
-  opacity: 0;
-  transition: all 0.35s ease-in;
-}
+
  
 .modal.is-visible {
   visibility: visible;

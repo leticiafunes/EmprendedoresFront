@@ -4,7 +4,11 @@ import React, { useState, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useParams } from "react-router-dom"; //hook
 
+import {CloudinaryUploadWidget , url} from './CloudinaryUploadWidget'
+
 export default function CreateEmprendedor(props) {
+  
+  
   const [emprendedor, setEmprendedor] = useState({
     //las var de estado tienen que coincidir con los nombres de los inputs que los modificarán
 
@@ -30,12 +34,14 @@ export default function CreateEmprendedor(props) {
 
   useEffect(() => {
     const obtenerDatos = async () => {
+     
+     
       if (id) {
         const res = await axios.get(process.env.REACT_APP_INITIAL_PATH + 
           "/api/emprendedores/" + id
         );
-
       
+        
         if (res.data) {
           const new_emprendedor = res.data;
           setEmprendedor({
@@ -53,7 +59,12 @@ export default function CreateEmprendedor(props) {
             
           });
          
+          console.log ('Editando: ' + new_emprendedor.nombre + ' id: ' +  id) 
         }
+
+       
+
+
         
         setEdit({ ...edit, editing: true, _id: id });
       }
@@ -66,26 +77,21 @@ export default function CreateEmprendedor(props) {
 
   const updateEmprendedor = (e) => {
    
+   
     setEmprendedor({ ...emprendedor, [e.target.name]: e.target.value });
   };
 
 
   const updateEmprendedorActivo = (e) => {
-   
-    
-
-    setEmprendedor({ ...emprendedor, [e.target.name]: e.target.checked });
- 
+      setEmprendedor({ ...emprendedor, [e.target.name]: e.target.checked });
    
   };
 
 
 
-
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log (emprendedor)
-
+ 
     if (edit.editing) {
       const updateEmprendedor = {
         nombre: emprendedor.nombre,
@@ -99,10 +105,15 @@ export default function CreateEmprendedor(props) {
         nombre_emprendimiento: emprendedor.nombre_emprendimiento,
       };
        
+      console.log (updateEmprendedor);
+      console.log ('axios:' + process.env.REACT_APP_INITIAL_PATH + "/api/emprendedores/" + edit._id);
+
       await axios.put( process.env.REACT_APP_INITIAL_PATH + 
         "/api/emprendedores/" + edit._id,
         updateEmprendedor
       );
+
+    
     } else {
       const newEmprendedor = {
         nombre: emprendedor.nombre,
@@ -118,6 +129,7 @@ export default function CreateEmprendedor(props) {
 
       await axios.post(process.env.REACT_APP_INITIAL_PATH + "/api/emprendedores/", newEmprendedor);
     }
+    
 
     //window.location.href = "/emprendedores";
   };
@@ -136,6 +148,34 @@ export default function CreateEmprendedor(props) {
       imagen: "",
     });
   };
+
+
+  const openWidget = () => {
+  
+    var myWidget = window.cloudinary.createUploadWidget(
+      {
+        cloudName: "dlujwnnwv",
+        uploadPreset: "emprendedores"
+      },
+      (error, result) => {
+        if (!error && result && result.event === "success") {
+          console.log("Done! Here is the image info: ", result.info.secure_url);
+          const imageurl = result.info.secure_url
+       
+          setEmprendedor({ ...emprendedor, imagen: imageurl  });
+         
+          
+        
+        }
+      }
+    )
+
+    myWidget.open();
+
+    }
+
+
+
 
   return (
     <div className="col-md-6 offset-md-3">
@@ -256,8 +296,13 @@ export default function CreateEmprendedor(props) {
             value={emprendedor.imagen}
             required
           />
+           <button className="cloudinary-button" onClick= {openWidget} >
+            Elegir foto
+           </button>     
         </div>
 
+          
+  
         <form onSubmit={onSubmit}>
           <button type="submit" className="btn btn-primary">
             Grabar Emprendedor

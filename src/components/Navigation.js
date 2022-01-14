@@ -2,13 +2,20 @@ import React from "react";
 import {Link} from 'react-router-dom'
 
 export default function Navigation() {
+
+
+
   return (
+
+    
+
 
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
         <Link className="navbar-brand" to='/'>
           Emprendedores
         </Link>
+        
         <button
           className="navbar-toggler"
           type="button"
@@ -18,8 +25,11 @@ export default function Navigation() {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon"></span>
+        <span className="navbar-toggler-icon"></span>
         </button>
+
+
+
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
@@ -31,9 +41,7 @@ export default function Navigation() {
             <li className="nav-item">
              <Link className='nav-link' to ="/user"> Create User </Link>
             </li>
-            <li className="nav-item">
-             <Link className='nav-link' to ="/uploadImage"> Upload Image </Link>
-            </li>
+         
             <li className="nav-item">
             <Link className='nav-link' to ="/emprendedores">Emprendedores </Link>
             </li>
@@ -42,6 +50,11 @@ export default function Navigation() {
         </div>
       </div>
     </nav>
+
+
+    
+
+
 
   );
 }

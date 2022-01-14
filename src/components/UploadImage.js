@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import Alert from '../components/Alert';
 
+import Alert from './subir_imagen';
+
+
+
 export default function Upload() {
     const [fileInputState, setFileInputState] = useState('');
     const [previewSource, setPreviewSource] = useState('');
@@ -59,6 +63,9 @@ export default function Upload() {
     };
     return (
         <div>
+
+            <button id="upload_widget" class="cloudinary-button">Upload files</button>
+
             <h1 className="title">Upload an Image</h1>
             <Alert msg={errMsg} type="danger" />
             <Alert msg={successMsg} type="success" />

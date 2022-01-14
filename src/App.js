@@ -5,23 +5,27 @@ import {BrowserRouter as Router, Routes,  Route} from 'react-router-dom'  //para
 
 import './App.css';
 
-import Navigation from './components/Navigation'
+import Navigation from './components/Navbar'
 import CreateNote from './components/CreateNote'
 import CreateUser from './components/CreateUser'
 import NotesList from './components/NotesList'
-import UploadImage from './components/UploadImage'
+// import {CloudinaryUploadWidget} from './components/CloudinaryUploadWidget'
 import Emprendedores from './components/Emprendedores'
 import CreateEmprendedor from './components/CreateEmprendedor'
+
+
+
 
 function App() {
   return (
      
       <Router>
-      
+
+     
          <Navigation />
         
       
-         <div className = "container p-4">
+         <div className = "container ">
        
          <Routes>
        
@@ -32,8 +36,6 @@ function App() {
             <Route path="/create" element={<CreateNote/>}/>
          
             <Route path="/user" element={<CreateUser/>}/>
-
-            <Route path="/uploadImage" element={<UploadImage/>}/>
 
             <Route path="/emprendedores" element={<Emprendedores/>}/>
 
