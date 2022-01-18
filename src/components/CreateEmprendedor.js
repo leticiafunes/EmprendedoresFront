@@ -1,52 +1,46 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-//import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useParams } from "react-router-dom"; //hook
-
-import {CloudinaryUploadWidget , url} from './CloudinaryUploadWidget'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export default function CreateEmprendedor(props) {
   
-  
-  const [emprendedor, setEmprendedor] = useState({
-    //las var de estado tienen que coincidir con los nombres de los inputs que los modificarán
+  const [edit, setEdit] = useState({ editing: false, id: "" });
 
+  const [emprendedor, setEmprendedor] = useState({
     nombre: "",
     activo: true,
     tags: [],
     resena: "",
     telefono: "",
     mail: "",
-    redes: [],
+    redes: [{nombre: 'Red' , link: 'Sin redes'}],
     imagen: "",
     nombre_emprendimiento: "",
   });
 
-  const [edit, setEdit] = useState({
-    //las var de estado tienen que coincidir con los nombres de los inputs que los modificarán
+  
+  const { id } = useParams(); //Para ver que emprendedor tengo que editar
 
-    editing: false,
-    _id: "",
-  });
-
-  const { id } = useParams(); //para saber que id viene en la  consulta
 
   useEffect(() => {
+   
     const obtenerDatos = async () => {
-     
-     
-      if (id) {
-        const res = await axios.get(process.env.REACT_APP_INITIAL_PATH + 
-          "/api/emprendedores/" + id
+        if (id) {
+        const res = await axios.get(
+          process.env.REACT_APP_INITIAL_PATH + "/api/emprendedores/" + id
         );
-      
-        
+
         if (res.data) {
+
           const new_emprendedor = res.data;
+          
+             
+
           setEmprendedor({
             ...emprendedor,
-
             nombre: new_emprendedor.nombre,
             activo: new_emprendedor.activo,
             tags: new_emprendedor.tags,
@@ -56,134 +50,170 @@ export default function CreateEmprendedor(props) {
             redes: new_emprendedor.redes,
             imagen: new_emprendedor.imagen,
             nombre_emprendimiento: new_emprendedor.nombre_emprendimiento,
-            
           });
-         
-          console.log ('Editando: ' + new_emprendedor.nombre + ' id: ' +  id) 
+      
+
+          setEdit ({...edit, 
+            editing: true, 
+            _id: id
+          });
+    
+
         }
-
-       
-
-
-        
-        setEdit({ ...edit, editing: true, _id: id });
       }
     };
 
     obtenerDatos();
-    
-   
+
+   //hay error al leeer las redes almacenadas ya. Probar crear uno nueo
+
+
+
   }, []);
 
   const updateEmprendedor = (e) => {
-   
-   
     setEmprendedor({ ...emprendedor, [e.target.name]: e.target.value });
   };
 
-
   const updateEmprendedorActivo = (e) => {
-      setEmprendedor({ ...emprendedor, [e.target.name]: e.target.checked });
-   
+    setEmprendedor({ ...emprendedor, [e.target.name]: e.target.checked });
   };
 
 
 
   const onSubmit = async (e) => {
     e.preventDefault();
- 
-    if (edit.editing) {
-      const updateEmprendedor = {
-        nombre: emprendedor.nombre,
-        activo: emprendedor.activo,
-        tags: emprendedor.tags,
-        resena: emprendedor.resena,
-        telefono: emprendedor.telefono,
-        mail: emprendedor.mail,
-        redes: emprendedor.redes,
-        imagen: emprendedor.imagen,
-        nombre_emprendimiento: emprendedor.nombre_emprendimiento,
-      };
-       
-      console.log (updateEmprendedor);
-      console.log ('axios:' + process.env.REACT_APP_INITIAL_PATH + "/api/emprendedores/" + edit._id);
 
-      await axios.put( process.env.REACT_APP_INITIAL_PATH + 
-        "/api/emprendedores/" + edit._id,
+      const updateEmprendedor = {
+      nombre: emprendedor.nombre,
+      activo: emprendedor.activo,
+      tags: emprendedor.tags,
+      resena: emprendedor.resena,
+      telefono: emprendedor.telefono,
+      mail: emprendedor.mail,
+      redes: emprendedor.redes,
+      imagen: emprendedor.imagen,
+      nombre_emprendimiento: emprendedor.nombre_emprendimiento,
+    };
+
+    if (edit.editing) {
+
+      
+      await axios.put(
+        process.env.REACT_APP_INITIAL_PATH + "/api/emprendedores/" + edit._id,
         updateEmprendedor
       );
-
-    
     } else {
-      const newEmprendedor = {
-        nombre: emprendedor.nombre,
-        activo: emprendedor.activo,
-        tags: emprendedor.tags,
-        resena: emprendedor.resena,
-        telefono: emprendedor.telefono,
-        mail: emprendedor.mail,
-        redes: emprendedor.redes,
-        imagen: emprendedor.imagen,
-        nombre_emprendimiento: emprendedor.nombre_emprendimiento,
-      };
-
-      await axios.post(process.env.REACT_APP_INITIAL_PATH + "/api/emprendedores/", newEmprendedor);
+     
+      await axios.post(
+        process.env.REACT_APP_INITIAL_PATH + "/api/emprendedores/",
+        updateEmprendedor
+      );
     }
-    
 
     //window.location.href = "/emprendedores";
   };
 
-  const clearInputs = () => {
-    setEmprendedor({
-      ...emprendedor,
-      nombre: "",
-      nombre_emprendimiento: "",
-      activo: true,
-      tags: [],
-      resena: "",
-      telefoo: "",
-      mail: "",
-      redes: [],
-      imagen: "",
-    });
-  };
-
-
   const openWidget = () => {
-  
     var myWidget = window.cloudinary.createUploadWidget(
       {
         cloudName: "dlujwnnwv",
-        uploadPreset: "emprendedores"
+        uploadPreset: "emprendedores",
       },
       (error, result) => {
         if (!error && result && result.event === "success") {
-          console.log("Done! Here is the image info: ", result.info.secure_url);
-          const imageurl = result.info.secure_url
-       
-          setEmprendedor({ ...emprendedor, imagen: imageurl  });
-         
-          
-        
+          console.log("La imagen subió correctamente. Aquí está el link: ", result.info.secure_url);
+          const imageurl = result.info.secure_url;
+
+          setEmprendedor({ ...emprendedor, imagen: imageurl });
         }
       }
-    )
+    );
 
     myWidget.open();
+  };
 
+  
+
+
+  
+  const onRedChangeNombre  = (e) => {
+
+    
+    const newRedes = emprendedor.redes.map((red, index) => {
+      if (e.target.name === index.toString()) {
+        return { ...red, nombre: e.target.value };
+     }
+      return red;
+    })
+
+ 
+    setEmprendedor({...emprendedor, redes: newRedes})
+
+ 
+    
+  };
+
+  
+  const onRedChangeLink  = (e) => {
+
+    
+    const newRedes = emprendedor.redes.map((red, index) => {
+      if (e.target.name === index.toString()) {
+        return { ...red, link: e.target.value };
+     }
+      return red;
+    })
+
+ 
+    setEmprendedor({...emprendedor, redes: newRedes})
+
+ 
+    
+  };
+
+  const agregarRed = () => {
+
+    const nuevaRed = {nombre: 'Nueva Red' , link: 'Sin Link'}
+    
+    const newRedes =  [...emprendedor.redes, nuevaRed ]
+   
+
+     
+    setEmprendedor({...emprendedor, redes: newRedes})
+
+
+  } 
+
+
+  const borrarRed = (indice) => {
+
+    if (indice > 0) {
+     
+      
+
+    const nuevaRed = emprendedor.redes.filter ( (red, index) => indice !== index )
+   setEmprendedor ({...emprendedor, redes: nuevaRed })
+   
     }
+  }  
+
+
 
 
 
 
   return (
-    <div className="col-md-6 offset-md-3">
-      <div className="card card-body">
-        <h4> {edit.editing && <p>Editar Emprendedor</p>}</h4>
-        <h4> {!edit.editing && <p>Crear Emprendedor</p>}</h4>
+    <form className="formulario" onSubmit={onSubmit}>
+      <h4> {edit.editing && <p>Editar Emprendedor</p>}</h4>
+      <h4> {!edit.editing && <p>Crear Emprendedor</p>}</h4>
 
-        <div className="mb-3">
+      <div className="row mb-3">
+        <label htmlFor="nombre_id" className="col-sm-2 col-form-label">
+          Nombre
+        </label>
+
+        <div className="col-sm-10">
           <input
             type="text"
             className="form-control"
@@ -194,52 +224,68 @@ export default function CreateEmprendedor(props) {
             required
           />
         </div>
+      </div>
 
-        <div className="mb-3">
+      <div className="row mb-3">
+        <label htmlFor="nombre_id" className="col-sm-2 col-form-label">
+          Empresa
+        </label>
+
+        <div className="col-sm-10">
           <input
             type="text"
             className="form-control"
-            placeholder="nombre_emprendimiento"
+            placeholder="Nombre del emprendimiento"
             name="nombre_emprendimiento"
             onChange={updateEmprendedor}
             value={emprendedor.nombre_emprendimiento}
             required
           />
         </div>
+      </div>
 
-        <div className="mb-3">
+      <div className="row mb-3">
+        <label htmlFor="nombre_id" className="col-sm-2 col-form-label">
+          Reseña
+        </label>
+
+        <div className="col-sm-10">
           <textarea
             name="resena"
             className="form-control"
-            placeholder="Content"
+            placeholder="Reseña del emprendimiento"
             onChange={updateEmprendedor}
             value={emprendedor.resena}
             required
-
           />
         </div>
-        <div className="mb-3">
+      </div>
+
+      <div className="mb-3">
         <div className="form-check form-switch">
           <input
             className="form-check-input"
             type="checkbox"
             placeholder="Activo"
-            name="activo"onChange={updateEmprendedorActivo}
-            value= {emprendedor.activo}
+            name="activo"
+            onChange={updateEmprendedorActivo}
+            value={emprendedor.activo}
             required
             id="activo"
-            checked= {emprendedor.activo}
-
-           
+            checked={emprendedor.activo}
           />
           <label className="form-check-label" htmlFor="activo">
             Activo
           </label>
         </div>
-        </div>
-       
+      </div>
 
-        <div className="mb-3">
+      <div className="row mb-3">
+        <label htmlFor="nombre_id" className="col-sm-2 col-form-label">
+          Tags
+        </label>
+
+        <div className="col-sm-10">
           <input
             type="text"
             className="form-control"
@@ -250,19 +296,14 @@ export default function CreateEmprendedor(props) {
             required
           />
         </div>
+      </div>
 
-        <div className="mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Redes"
-            name="redes"
-            onChange={updateEmprendedor}
-            value={emprendedor.redes}
-            required
-          />
-        </div>
-        <div className="mb-3">
+      <div className="row mb-3">
+        <label htmlFor="nombre_id" className="col-sm-2 col-form-label">
+          Teléfono
+        </label>
+
+        <div className="col-sm-10">
           <input
             type="text"
             className="form-control"
@@ -273,8 +314,14 @@ export default function CreateEmprendedor(props) {
             required
           />
         </div>
+      </div>
 
-        <div className="mb-3">
+      <div className="row mb-3">
+        <label htmlFor="nombre_id" className="col-sm-2 col-form-label">
+          Mail
+        </label>
+
+        <div className="col-sm-10">
           <input
             type="text"
             className="form-control"
@@ -285,30 +332,138 @@ export default function CreateEmprendedor(props) {
             required
           />
         </div>
+      </div>
 
-        <div className="mb-3">
+      <div className="row mb-3">
+        <div className="col-sm-2">
+          <label htmlFor="nombre_id" className="col-sm-6 col-form-label">
+            Logo
+          </label>
+
+          <button className="icono " onClick={openWidget}>
+            <FontAwesomeIcon icon={faSearch} />
+          </button>
+
+
+
+
+
+        </div>
+
+        <div className="col-sm-10">
           <input
             type="text"
             className="form-control"
-            placeholder="Imagen"
+            placeholder="Logo del Emprendimiento"
             name="imagen"
             onChange={updateEmprendedor}
             value={emprendedor.imagen}
             required
           />
-           <button className="cloudinary-button" onClick= {openWidget} >
-            Elegir foto
-           </button>     
+        </div>
+      </div>
+
+   
+       
+      
+      {emprendedor.redes &&
+       emprendedor.redes.map((red, indice) => (    
+        <div className="row mb-3"  key= {indice}>
+
+        {indice ===  0 && 
+        
+        <div className="col-sm-2">
+        <label htmlFor="nombre_id" className="col-sm-6 col-form-label">
+          Redes
+        </label>
+      
+        <button  onClick={agregarRed}  className = "icono">
+
+          <i className="fas fa-plus"></i> 
+
+         
+        </button>
+        </div>
+        }
+
+        {indice >  0 && 
+        
+        <div className="col-sm-2">
+        <label htmlFor="nombre_id" className="col-sm-6 col-form-label">
+          
+        </label>
+      
+        <button  onClick={agregarRed}> 
+         
+        </button>
+        </div>
+        }
+
+
+        <div className="col-sm-10">
+        <div className="row mb-3">
+       
+        <div className="col-sm-1">
+           <button  onClick={() => borrarRed (indice)  }> 
+           <i className="fas fa-times"></i>
+
+           </button>
+        </div>
+         
+          <div className="col-sm-3">
+           <select
+            className="form-control"
+            name= {indice}
+            value={emprendedor.redes[indice].nombre}
+            onChange={onRedChangeNombre}
+            required>
+         
+              <option value= "Red" name="red"> Red </option>
+              <option value= "Web" name="facebook"> Web </option>
+              <option value= "Facebook" name="facebook"> Facebook </option>
+              <option value= "Instagram" name="instagram"> Instagram </option>
+              <option value= "Twiter" name="twiter"> Twiter </option>
+              <option value= "Otro" name="otro"> Otro </option>
+            
+          </select>
+          </div>
+     
+          <div className="col-sm-8">
+           <input  
+              type="text"
+              className="form-control "
+              placeholder="Redes"
+              name={indice}
+              onChange={onRedChangeLink}
+              value={emprendedor.redes[indice].link}
+              required />
+      
+          </div>  
+
+
+
+        </div>
+        </div>
+   
         </div>
 
-          
+       ))}
+
+
+
+      
   
-        <form onSubmit={onSubmit}>
-          <button type="submit" className="btn btn-primary">
-            Grabar Emprendedor
-          </button>
-        </form>
+  
+
+
+
+
+
+      <div className="row mb-3">
+        <button type="submit" className="btn btn-primary btn-grabar">
+          Grabar Emprendedor
+        </button>
       </div>
-    </div>
+    </form>
   );
 }

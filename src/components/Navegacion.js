@@ -2,17 +2,28 @@ import React from "react";
 import {Link} from 'react-router-dom'
 
 import { useState} from "react";
-import './estilosnavegacion.css';
-export default function Navigation() {
+import './Navegacion.css';
 
 
+export default function Navegacion ({navigationStatus,setNavigationStatus}) {
 
     
     const [click, setClick] = useState(false);
 
-    const handleClick = () => setClick(!click);
+    
 
-    const closeMobileMenu = () => setClick(false);
+
+    const handleClick = () => {
+      
+      setClick(!click);
+      setNavigationStatus(!click);
+   }
+
+    const closeMobileMenu = () => {
+       setClick(false);
+       setNavigationStatus(false);
+
+    }
 
 
 
@@ -25,7 +36,7 @@ export default function Navigation() {
             
          <Link className="navbar-logo" to='/'> Emprendedores </Link>
  
-         <div className={click ? 'menu-toggle is-active' : 'menu-toggle' }   onClick={handleClick} id="mobile-menu">
+         <div className={(click&&navigationStatus) ? 'menu-toggle is-active' : 'menu-toggle' }   onClick={handleClick} id="mobile-menu">
              <span className="bar"></span>
              <span className="bar"></span>
              <span className="bar"></span>
@@ -33,7 +44,7 @@ export default function Navigation() {
          
          
        
-         <ul className={click ? 'nav-menu active' : 'nav-menu' }>
+         <ul className={(click&&navigationStatus) ? 'nav-menu active' : 'nav-menu' }>
 
             <li className="item-lista">
                <Link className='nav-links' to ="/" onClick={closeMobileMenu}> Notas </Link>
@@ -46,7 +57,16 @@ export default function Navigation() {
             </li>
 
             <li className="item-lista">
-            <Link className='nav-links' to ="/emprendedores" onClick={closeMobileMenu}>Emprendedores </Link>
+            <Link className='nav-links' 
+            
+            to={{
+               pathname: "/emprendedores" ,
+               search: "?sort=name",
+               hash: "#the-hash",
+               state: { fromDashboard: true }
+             }}
+            
+            onClick={closeMobileMenu}>Emprendedores </Link>
             </li> 
 
 

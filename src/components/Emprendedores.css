@@ -16,7 +16,7 @@
    
     --blue: steelblue;
     --white: #fff;
-    --black: rgba(0, 0, 0, 0.8);
+    --black: #000000cc;
     --bounceEasing: cubic-bezier(0.51, 0.92, 0.24, 1.15);
   }
    
@@ -69,12 +69,34 @@
 
 }
 
+.container-nuevo {
+ 
+  width: auto;
+  margin: 15px;
+  display: flex;
+  position: relative;
+  justify-content: flex-end;
+ 
+
+
+}
+
+
+  
+.container-modal {
+  width: auto;
+  margin-bottom: 5px;
+  margin-top: 5px;
+ 
+
+}
+
 .btn-buscar {
  
   display: flex;
-  
   margin: 10px;
   margin-bottom: 10px;  
+ 
   
 }
 
@@ -83,7 +105,9 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin: 10px;
-  margin-bottom: 10px;  
+  margin-bottom: 10px; 
+  height: vh; 
+  background: var(--ligthgray);
   
 }
 
@@ -132,10 +156,14 @@
 }
 
 .imagen-empre-chica {
-  width: 100%;
-  height: auto;
+  
   cursor: pointer;
   margin-top: 5px;
+  object-fit: cover;
+  width:17vw;
+  height: 17vw;
+  padding: 1vw;
+
 }
 
 .imagen-empre-chica-modal {
@@ -208,6 +236,7 @@ button {
 }
 
 
+
  
 .btn-group {
   text-align: center;
@@ -278,7 +307,7 @@ button {
 
 .modal-footer {
   display: grid; 
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1fr;
   background: var(--white);
 }
 
@@ -299,6 +328,14 @@ button {
 .link_redes {
 
   text-decoration: none;
+}
+
+
+.icono {
+
+  font-size: 25px;
+  padding: 10px;
+  
 }
 
 .icono_redes {
@@ -336,17 +373,31 @@ button {
 .inputBuscar{
   width: 50% !important;
 }
-.containerInput{
+
+/*.containerInput{
   align-items: end;
   right: 0;
   display: flex;
   justify-content: flex-end;
   padding-bottom: 25px;
+}*/
+
+.formulario {
+
+  background: var(--white);
+  padding: 10px 20px;
 }
 
 
+.btn-grabar {
 
-@media screen and (min-width: 768px) {
+  background: var(--orange);
+  width: 100%;
+  border: none;
+  align-items: right;
+}
+
+@media screen and (min-width: 820px) {
 
 
 
@@ -369,23 +420,14 @@ button {
     }
 
    
-    .modal-footer {
 
-      grid-column-start: 1;
-      grid-column-end: 3;
-    }
 
     .modal-content {
 
       padding: 20px;
     }
 
-    .modal-footer {
-     
-      display: grid; 
-      grid-template-columns: 0.5fr 4fr 0.5fr 4fr;
-    }
-
+   
 
 
     .link_redes {
@@ -411,6 +453,15 @@ button {
 
     .containerInput{
       padding-bottom: 15px;
+    }
+
+
+    .btn-grabar {
+
+   
+      width: 30%
+     
+ 
     }
 
 }

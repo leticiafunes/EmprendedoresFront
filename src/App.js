@@ -1,11 +1,11 @@
 import React from 'react'
 import {BrowserRouter as Router, Routes,  Route} from 'react-router-dom'  //para crear Rutas en el SPA
-
+import { useState } from "react";
 //import 'bootstrap/dist/css/bootstrap.min.css'
 
 import './App.css';
 
-import Navigation from './components/Navbar'
+import Navigation from './components/Navegacion'
 import CreateNote from './components/CreateNote'
 import CreateUser from './components/CreateUser'
 import NotesList from './components/NotesList'
@@ -17,12 +17,16 @@ import CreateEmprendedor from './components/CreateEmprendedor'
 
 
 function App() {
+
+  const [navigationStatus , setNavigationStatus] = useState (false)
+
+
   return (
      
       <Router>
 
      
-         <Navigation />
+         <Navigation navigationStatus = {navigationStatus} setNavigationStatus = {setNavigationStatus}/>
         
       
          <div className = "container ">
@@ -37,7 +41,7 @@ function App() {
          
             <Route path="/user" element={<CreateUser/>}/>
 
-            <Route path="/emprendedores" element={<Emprendedores/>}/>
+            <Route path="/emprendedores" element={<Emprendedores setNavigationStatus = {setNavigationStatus}/>}/>
 
             <Route path="/emprendedores/create" element={<CreateEmprendedor/>}/>
 

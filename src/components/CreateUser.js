@@ -76,6 +76,7 @@ export default function CreateUser() {
         <h1>Usuarios</h1>
           <form onSubmit={guardarUser}>
             <div className="form-group">
+              <label htmlFor="text"> Nombre: </label>
               <input
                 type="text"
                 className="form-control"
