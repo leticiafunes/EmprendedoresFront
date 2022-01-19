@@ -3,10 +3,6 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 
 
-
-console.log (process.env.REACT_APP_INITIAL_PATH);
-
-
 export default function CreateUser() {
   const [users, setUsers] = useState([]);
   const [username, setUsername] = useState('');

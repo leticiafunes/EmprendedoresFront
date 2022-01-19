@@ -9,7 +9,6 @@ import Navigation from './components/Navegacion'
 import CreateNote from './components/CreateNote'
 import CreateUser from './components/CreateUser'
 import NotesList from './components/NotesList'
-// import {CloudinaryUploadWidget} from './components/CloudinaryUploadWidget'
 import Emprendedores from './components/Emprendedores'
 import CreateEmprendedor from './components/CreateEmprendedor'
 

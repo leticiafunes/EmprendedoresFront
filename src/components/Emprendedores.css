@@ -26,9 +26,7 @@
     padding: 0;
     box-sizing:content-border;
     text-indent: 0;
-    
    
-  
   }
   
   
@@ -76,20 +74,10 @@
   display: flex;
   position: relative;
   justify-content: flex-end;
- 
-
-
 }
 
 
-  
-.container-modal {
-  width: auto;
-  margin-bottom: 5px;
-  margin-top: 5px;
- 
 
-}
 
 .btn-buscar {
  
@@ -374,13 +362,7 @@ button {
   width: 50% !important;
 }
 
-/*.containerInput{
-  align-items: end;
-  right: 0;
-  display: flex;
-  justify-content: flex-end;
-  padding-bottom: 25px;
-}*/
+
 
 .formulario {
 

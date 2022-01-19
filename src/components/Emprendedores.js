@@ -61,10 +61,7 @@ export default function Emprendedores({ setNavigationStatus }) {
       incluyeElemento(elemento, busqueda)
     );
 
-    console.log(tablaemprendedores);
-    console.log(empFiltrados);
-
-    setEmprendedores(empFiltrados);
+   setEmprendedores(empFiltrados);
   };
 
   const handleClick = (index) => () => {
@@ -79,7 +76,8 @@ export default function Emprendedores({ setNavigationStatus }) {
     setShowModal(true);
   };
 
-  return (
+
+   return (
     <div>
       <div className="App">
         {showModal ? (

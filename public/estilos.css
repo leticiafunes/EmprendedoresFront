@@ -42,8 +42,8 @@ body {
 
 .container {
   width: auto;
-  margin-bottom: 30px;  
-  background: var(--white);
+  margin-bottom: 15px;  
+  background: var(--green);
 }
 
 
