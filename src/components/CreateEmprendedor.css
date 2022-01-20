@@ -1,0 +1,58 @@
+
+:root {
+    --darkgray: #474543;
+    --gray: #978b7b;
+    --orange: #ff9000;
+    --cian: #037c03;
+    --yellow: #dca305;
+    --terracota: rgb(238, 93, 9);
+    --white: #fff;
+    --green: #5ea862;
+    --ligthgray: #b8b5b2;
+    --tarjeta: #8cc2c4;
+    --blue: steelblue;
+    --white: #fff;
+    --black: #000000cc;
+    --bounceEasing: cubic-bezier(0.51, 0.92, 0.24, 1.15);
+  }
+  
+  .formCrearEmprendedor {
+
+    background: var(--white);
+    padding: 10px 20px;
+  }
+  
+  .oscuro {
+    
+    color: var(--darkgray);
+    font-weight: bold;
+  }
+
+  .icono{ 
+      padding: 10px;
+      color: var(--darkgray);
+
+  }
+
+  .titulo {
+
+    font-size: xx-large;
+    color: var(--darkgray);
+    font-weight: bold;
+    margin: 10px;
+  }
+
+
+  .grabarEmprendedorContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var (--black);
+  }
+  
+  .grabarEmprendedor {
+    padding: 5px;
+    border: 3px solid var(--tarjeta);
+
+  }
+  

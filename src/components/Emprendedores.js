@@ -61,7 +61,7 @@ export default function Emprendedores({ setNavigationStatus }) {
       incluyeElemento(elemento, busqueda)
     );
 
-   setEmprendedores(empFiltrados);
+    setEmprendedores(empFiltrados);
   };
 
   const handleClick = (index) => () => {
@@ -76,10 +76,9 @@ export default function Emprendedores({ setNavigationStatus }) {
     setShowModal(true);
   };
 
-
-   return (
-    <div>
-      <div className="App">
+  return (
+    <div className="pantallaEmprendedores">
+      <div className="modalEmprendedor">
         {showModal ? (
           <EmprendedorModal
             setShowModal={setShowModal}
@@ -90,7 +89,7 @@ export default function Emprendedores({ setNavigationStatus }) {
       </div>
 
       <div className="barraTareas">
-        <div className="btn-buscar">
+        <div className="btnBuscarContainer">
           <input
             type="search"
             className="input-buscar"
@@ -106,44 +105,80 @@ export default function Emprendedores({ setNavigationStatus }) {
           </div>
         </div>
 
-        <div className="container-nuevo ">
+        <div className="btnNuevoContainer ">
           <Link
-            className="btn btn-secondary btn-sm"
+            className="btn btn-outline-secondary btn-sm sinBorde"
             to={"/emprendedores/create"}
           >
-            Emprendedor Nuevo
+            <button
+              className="iconoAgregar"
+              alt="Agregar Emprendedor"
+              title="Agregar un nuevo Emprendedor"
+            >
+              <i className="fas fa-plus"></i>
+            </button>
           </Link>
         </div>
       </div>
 
-      <div className="emprendedor">
+      <div className="marcaEmprendimiento">¡Aquí encontrarás de todo!</div>
+
+      <div className="emprendedoresContainer">
         {emprendedores.map((emprendedor, index) => (
-          <div className="emprendedor-tarjeta" key={emprendedor._id}>
-            <div className="container text-center">
-              <div className="empre-imagen">
-                <img
-                  className="imagen-empre-chica"
-                  src={emprendedor.imagen}
-                  alt="Emprendedor"
-                  onClick={handleClick(index)}
-                />
-              </div>
+          <div className="tarjetaEmprendedor" key={emprendedor._id}>
+            <div className="imagenEmprendedorContainer">
+              <img
+                className="imagenEmprendedor"
+                src={emprendedor.imagen}
+                alt={"Logo: " + emprendedor.nombre_emprendimiento}
+                onClick={handleClick(index)}
+              />
             </div>
-            <div className="container text-center">
-              <div className="empre-marca text" data-open="modal1" >
-                <h3 className="nombre_emprendimiento" claves="platería">
-                  {" "}
-                  {emprendedor.nombre}{" "}
-                </h3>
-              </div>
+
+            <div className="marcaEmprendedorCoontainer" data-open="modal1">
+              <h3 className="marcaEmprendimiento">
+                {emprendedor.nombre_emprendimiento}
+              </h3>
             </div>
-            <div className="container text-center">
-              <Link
-                className="btn btn-outline-secondary  btn-sm"
-                to={"/emprendedores/edit/" + emprendedor._id}
-              >
-                Modificar
-              </Link>
+
+            <div className="marcaEmprendedorCoontainer">
+              <h3 className="rubroEmprendimiento">{emprendedor.rubro}</h3>
+            </div>
+            <div className="marcaEmprendedorContainer">
+              <h3 className="descripcionEmprendimiento">
+                {emprendedor.descripcioncorta}
+              </h3>
+            </div>
+
+            <div
+              className="irEmprendedorContainer"
+              title="Ver información del Emprendedor"
+            >
+
+               <div className="editarEmprendedorCoontainer"> 
+               <Link
+                  className="btn btn-outline-secondary  btn-sm oculto"
+                  to={"/"}
+                >
+                  <i class="fas fa-user-edit"></i>
+                </Link>
+    
+               </div>
+
+              <button className="irEmprendedor" onClick={handleClick(index)}>
+                Ir a Emprendedor
+              </button>
+            
+              <div className="editarEmprendedorCoontainer">
+                <Link
+                  className="btn btn-outline-secondary  btn-sm"
+                  title="Editar Emprendedor"
+                  to={"/emprendedores/edit/" + emprendedor._id}
+                >
+                  <i class="fas fa-user-edit"></i>
+                </Link>
+              </div>
+         
             </div>
 
             <div className="claves oculto"> {emprendedor.tags} </div>
@@ -151,7 +186,11 @@ export default function Emprendedores({ setNavigationStatus }) {
         ))}
       </div>
 
-      <i className="fas fa-arrow-circle-up ir-arriba"></i>
+      <footer className="footerEmprendedores">
+        <div className="lineaFooter">
+          Desarrollado por Leticia Funes - Todos los derechos reservados . 2022
+        </div>
+      </footer>
     </div>
   );
 }

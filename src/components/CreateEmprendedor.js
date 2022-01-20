@@ -4,9 +4,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useParams } from "react-router-dom"; //hook
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import "./CreateEmprendedor.css";
 
 export default function CreateEmprendedor(props) {
-  
   const [edit, setEdit] = useState({ editing: false, id: "" });
 
   const [emprendedor, setEmprendedor] = useState({
@@ -16,28 +16,24 @@ export default function CreateEmprendedor(props) {
     resena: "",
     telefono: "",
     mail: "",
-    redes: [{nombre: 'Red' , link: 'Sin redes'}],
+    redes: [{ nombre: "Red", link: "Sin redes", icono: " " }],
     imagen: "",
     nombre_emprendimiento: "",
+    rubro: "",
+    descripcioncorta: "",
   });
 
-  
   const { id } = useParams(); //Para ver que emprendedor tengo que editar
 
-
   useEffect(() => {
-   
     const obtenerDatos = async () => {
-        if (id) {
+      if (id) {
         const res = await axios.get(
           process.env.REACT_APP_INITIAL_PATH + "/api/emprendedores/" + id
         );
 
         if (res.data) {
-
           const new_emprendedor = res.data;
-          
-             
 
           setEmprendedor({
             ...emprendedor,
@@ -50,25 +46,18 @@ export default function CreateEmprendedor(props) {
             redes: new_emprendedor.redes,
             imagen: new_emprendedor.imagen,
             nombre_emprendimiento: new_emprendedor.nombre_emprendimiento,
+            rubro: new_emprendedor.rubro,
+            descripcioncorta: new_emprendedor.descripcioncorta,
           });
-      
 
-          setEdit ({...edit, 
-            editing: true, 
-            _id: id
-          });
-    
-
+          setEdit({ ...edit, editing: true, _id: id });
         }
       }
     };
 
     obtenerDatos();
 
-   //hay error al leeer las redes almacenadas ya. Probar crear uno nueo
-
-
-
+    //hay error al leeer las redes almacenadas ya. Probar crear uno nueo
   }, []);
 
   const updateEmprendedor = (e) => {
@@ -79,12 +68,10 @@ export default function CreateEmprendedor(props) {
     setEmprendedor({ ...emprendedor, [e.target.name]: e.target.checked });
   };
 
-
-
   const onSubmit = async (e) => {
     e.preventDefault();
 
-      const updateEmprendedor = {
+    const updateEmprendedor = {
       nombre: emprendedor.nombre,
       activo: emprendedor.activo,
       tags: emprendedor.tags,
@@ -94,17 +81,16 @@ export default function CreateEmprendedor(props) {
       redes: emprendedor.redes,
       imagen: emprendedor.imagen,
       nombre_emprendimiento: emprendedor.nombre_emprendimiento,
+      rubro: emprendedor.rubro,
+      descripcioncorta: emprendedor.descripcioncorta,
     };
 
     if (edit.editing) {
-
-      
       await axios.put(
         process.env.REACT_APP_INITIAL_PATH + "/api/emprendedores/" + edit._id,
         updateEmprendedor
       );
     } else {
-     
       await axios.post(
         process.env.REACT_APP_INITIAL_PATH + "/api/emprendedores/",
         updateEmprendedor
@@ -122,7 +108,10 @@ export default function CreateEmprendedor(props) {
       },
       (error, result) => {
         if (!error && result && result.event === "success") {
-          console.log("La imagen subió correctamente. Aquí está el link: ", result.info.secure_url);
+          console.log(
+            "La imagen subió correctamente. Aquí está el link: ",
+            result.info.secure_url
+          );
           const imageurl = result.info.secure_url;
 
           setEmprendedor({ ...emprendedor, imagen: imageurl });
@@ -133,83 +122,52 @@ export default function CreateEmprendedor(props) {
     myWidget.open();
   };
 
-  
-
-
-  
-  const onRedChangeNombre  = (e) => {
-
-    
+  const onRedChangeNombre = (e) => {
     const newRedes = emprendedor.redes.map((red, index) => {
       if (e.target.name === index.toString()) {
         return { ...red, nombre: e.target.value };
-     }
+      }
       return red;
-    })
+    });
 
- 
-    setEmprendedor({...emprendedor, redes: newRedes})
-
- 
-    
+    setEmprendedor({ ...emprendedor, redes: newRedes });
   };
 
-  
-  const onRedChangeLink  = (e) => {
-
-    
+  const onRedChangeLink = (e) => {
     const newRedes = emprendedor.redes.map((red, index) => {
       if (e.target.name === index.toString()) {
         return { ...red, link: e.target.value };
-     }
+      }
       return red;
-    })
+    });
 
- 
-    setEmprendedor({...emprendedor, redes: newRedes})
-
- 
-    
+    setEmprendedor({ ...emprendedor, redes: newRedes });
   };
 
   const agregarRed = () => {
+    const nuevaRed = { nombre: "Nueva Red", link: "Sin Link" };
 
-    const nuevaRed = {nombre: 'Nueva Red' , link: 'Sin Link'}
-    
-    const newRedes =  [...emprendedor.redes, nuevaRed ]
-   
+    const newRedes = [...emprendedor.redes, nuevaRed];
 
-     
-    setEmprendedor({...emprendedor, redes: newRedes})
-
-
-  } 
-
+    setEmprendedor({ ...emprendedor, redes: newRedes });
+  };
 
   const borrarRed = (indice) => {
-
     if (indice > 0) {
-     
-      
-
-    const nuevaRed = emprendedor.redes.filter ( (red, index) => indice !== index )
-   setEmprendedor ({...emprendedor, redes: nuevaRed })
-   
+      const nuevaRed = emprendedor.redes.filter(
+        (red, index) => indice !== index
+      );
+      setEmprendedor({ ...emprendedor, redes: nuevaRed });
     }
-  }  
-
-
-
-
-
+  };
 
   return (
-    <form className="formulario" onSubmit={onSubmit}>
-      <h4> {edit.editing && <p>Editar Emprendedor</p>}</h4>
-      <h4> {!edit.editing && <p>Crear Emprendedor</p>}</h4>
+    <form className="formCrearEmprendedor" onSubmit={onSubmit}>
+      <div className="titulo"> {edit.editing && <p>Editar Emprendedor</p>}</div>
+      <div className="titulo"> {!edit.editing && <p>Crear Emprendedor</p>}</div>
 
       <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-2 col-form-label">
+        <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
           Nombre
         </label>
 
@@ -227,7 +185,7 @@ export default function CreateEmprendedor(props) {
       </div>
 
       <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-2 col-form-label">
+        <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
           Empresa
         </label>
 
@@ -245,7 +203,43 @@ export default function CreateEmprendedor(props) {
       </div>
 
       <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-2 col-form-label">
+        <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
+          Rubro
+        </label>
+
+        <div className="col-sm-10">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Rubro del emprendimiento"
+            name="rubro"
+            onChange={updateEmprendedor}
+            value={emprendedor.rubro}
+            required
+          />
+        </div>
+      </div>
+
+      <div className="row mb-3">
+        <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
+          Descripción
+        </label>
+
+        <div className="col-sm-10">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Descripción Corta"
+            name="descripcioncorta"
+            onChange={updateEmprendedor}
+            value={emprendedor.descripcioncorta}
+            required
+          />
+        </div>
+      </div>
+
+      <div className="row mb-3">
+        <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
           Reseña
         </label>
 
@@ -274,14 +268,14 @@ export default function CreateEmprendedor(props) {
             id="activo"
             checked={emprendedor.activo}
           />
-          <label className="form-check-label" htmlFor="activo">
+          <label className="form-check-label oscuro" htmlFor="activo">
             Activo
           </label>
         </div>
       </div>
 
       <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-2 col-form-label">
+        <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
           Tags
         </label>
 
@@ -299,7 +293,7 @@ export default function CreateEmprendedor(props) {
       </div>
 
       <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-2 col-form-label">
+        <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
           Teléfono
         </label>
 
@@ -317,7 +311,7 @@ export default function CreateEmprendedor(props) {
       </div>
 
       <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-2 col-form-label">
+        <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
           Mail
         </label>
 
@@ -336,18 +330,13 @@ export default function CreateEmprendedor(props) {
 
       <div className="row mb-3">
         <div className="col-sm-2">
-          <label htmlFor="nombre_id" className="col-sm-6 col-form-label">
+          <label htmlFor="nombre_id" className="col-sm-6 col-form-label oscuro">
             Logo
           </label>
 
           <button className="icono " onClick={openWidget}>
             <FontAwesomeIcon icon={faSearch} />
           </button>
-
-
-
-
-
         </div>
 
         <div className="col-sm-10">
@@ -363,104 +352,96 @@ export default function CreateEmprendedor(props) {
         </div>
       </div>
 
-   
-       
-      
       {emprendedor.redes &&
-       emprendedor.redes.map((red, indice) => (    
-        <div className="row mb-3"  key= {indice}>
+        emprendedor.redes.map((red, indice) => (
+          <div className="row mb-3" key={indice}>
+            {indice === 0 && (
+              <div className="col-sm-2">
+                <label
+                  htmlFor="nombre_id"
+                  className="col-sm-6 col-form-label oscuro"
+                >
+                  Redes
+                </label>
 
-        {indice ===  0 && 
-        
-        <div className="col-sm-2">
-        <label htmlFor="nombre_id" className="col-sm-6 col-form-label">
-          Redes
-        </label>
-      
-        <button  onClick={agregarRed}  className = "icono">
+                <button onClick={agregarRed} className="icono">
+                  <i className="fas fa-plus"></i>
+                </button>
+              </div>
+            )}
 
-          <i className="fas fa-plus"></i> 
+            {indice > 0 && (
+              <div className="col-sm-2">
+                <label
+                  htmlFor="nombre_id"
+                  className="col-sm-6 col-form-label"
+                ></label>
 
-         
-        </button>
-        </div>
-        }
+                <button onClick={agregarRed}></button>
+              </div>
+            )}
 
-        {indice >  0 && 
-        
-        <div className="col-sm-2">
-        <label htmlFor="nombre_id" className="col-sm-6 col-form-label">
-          
-        </label>
-      
-        <button  onClick={agregarRed}> 
-         
-        </button>
-        </div>
-        }
+            <div className="col-sm-10">
+              <div className="row mb-3">
+                <div className="col-sm-1">
+                  <button className="icono" onClick={() => borrarRed(indice)}>
+                    <i className="fas fa-times"></i>
+                  </button>
+                </div>
 
+                <div className="col-sm-3">
+                  <select
+                    className="form-control"
+                    name={indice}
+                    value={emprendedor.redes[indice].nombre}
+                    onChange={onRedChangeNombre}
+                    required
+                  >
+                    <option value="Red" name="red">
+                      {" "}
+                      Red{" "}
+                    </option>
+                    <option value="Web" name="facebook">
+                      {" "}
+                      Web{" "}
+                    </option>
+                    <option value="Facebook" name="facebook">
+                      {" "}
+                      Facebook{" "}
+                    </option>
+                    <option value="Instagram" name="instagram">
+                      {" "}
+                      Instagram{" "}
+                    </option>
+                    <option value="Twiter" name="twiter">
+                      {" "}
+                      Twiter{" "}
+                    </option>
+                    <option value="Otro" name="otro">
+                      {" "}
+                      Otro{" "}
+                    </option>
+                  </select>
+                </div>
 
-        <div className="col-sm-10">
-        <div className="row mb-3">
-       
-        <div className="col-sm-1">
-           <button  onClick={() => borrarRed (indice)  }> 
-           <i className="fas fa-times"></i>
-
-           </button>
-        </div>
-         
-          <div className="col-sm-3">
-           <select
-            className="form-control"
-            name= {indice}
-            value={emprendedor.redes[indice].nombre}
-            onChange={onRedChangeNombre}
-            required>
-         
-              <option value= "Red" name="red"> Red </option>
-              <option value= "Web" name="facebook"> Web </option>
-              <option value= "Facebook" name="facebook"> Facebook </option>
-              <option value= "Instagram" name="instagram"> Instagram </option>
-              <option value= "Twiter" name="twiter"> Twiter </option>
-              <option value= "Otro" name="otro"> Otro </option>
-            
-          </select>
+                <div className="col-sm-8">
+                  <input
+                    type="text"
+                    className="form-control "
+                    placeholder="Redes"
+                    name={indice}
+                    onChange={onRedChangeLink}
+                    value={emprendedor.redes[indice].link}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-     
-          <div className="col-sm-8">
-           <input  
-              type="text"
-              className="form-control "
-              placeholder="Redes"
-              name={indice}
-              onChange={onRedChangeLink}
-              value={emprendedor.redes[indice].link}
-              required />
-      
-          </div>  
+        ))}
 
-
-
-        </div>
-        </div>
-   
-        </div>
-
-       ))}
-
-
-
-      
-  
-  
-
-
-
-
-
-      <div className="row mb-3">
-        <button type="submit" className="btn btn-primary btn-grabar">
+      <div className="grabarEmprendedorContainer">
+        <button type="submit" className="grabarEmprendedor">
           Grabar Emprendedor
         </button>
       </div>

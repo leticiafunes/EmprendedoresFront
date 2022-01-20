@@ -9,14 +9,14 @@
   --green: #5ea862;
   --ligthgray: #b8b5b2;
   --tarjeta: #8cc2c4;
-  --black: #111010;
+  --modo: #fff;
+  --black: rgb(0, 0, 0);
 }
 
 .App {
   font-family: sans-serif;
   text-align: center;
 }
-
 
 #modal .containerModal {
   position: absolute;
@@ -79,7 +79,7 @@
 .modal-dialog-modal {
   position: relative;
   border-radius: 5px;
-  background: var(--ligthgray);
+  background: var(--modo);
   overflow: auto;
   cursor: default;
   width: 100%;
@@ -88,7 +88,7 @@
 }
 
 .imagenContainer {
-  background: var(--ligthgray);
+  background: var(--modo);
   color: var(--white);
   font-weight: 700;
   border: none;
@@ -96,7 +96,7 @@
 }
 
 .resenaContainer {
-  background: var(--ligthgray);
+  background: var(--modo);
   display: grid;
   grid-template-columns: 1fr;
   margin: 2%;
@@ -114,14 +114,14 @@
 }
 
 .resena {
-  background: var (--ligthgray);
+  background: var(--modo);
   color: var(--black);
   padding: 5px;
 }
 
 .contactoContainer {
-  background: var(--ligthgray);
-  color: var(--white);
+  background: var(--modo);
+  color: var(--darkgray);
   font-weight: 700;
   border: none;
   margin: 2%;
@@ -129,14 +129,15 @@
 
 .footerModal {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 0.3fr 1fr;
 
-  background: var(--ligthgray);
-  color: var(--white);
+  background: var(--modo);
+  color: var(--darkgray);
   font-weight: 700;
   border: none;
-  padding: 15px;
-  margin: 2%;
+  padding: 5px;
+  margin: 5px;
+
 }
 
 .modalTitulo {
@@ -170,6 +171,13 @@
 
 .imagenModal {
   width: 100%;
+}
+
+.listaRedes {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding-left: 10px;
+
 }
 
 @media screen and (min-width: 820px) {

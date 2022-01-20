@@ -34,7 +34,20 @@ export default function Navegacion ({navigationStatus,setNavigationStatus}) {
      <nav className="navbar">
        
             
-         <Link className="navbar-logo" to='/'> Emprendedores </Link>
+
+        
+
+         <div  className = "navLogoContainer"  >
+
+          <img className= "navImagenLogo" src={"./images/emprendedoresLogo.png"}
+          alt="Emprendedor" />
+          
+          <Link className="navLetrasLogo" to='/'> Emprendedores Andinos</Link>
+
+        
+         </div>
+      
+
  
          <div className={(click&&navigationStatus) ? 'menu-toggle is-active' : 'menu-toggle' }   onClick={handleClick} id="mobile-menu">
              <span className="bar"></span>
@@ -69,13 +82,10 @@ export default function Navegacion ({navigationStatus,setNavigationStatus}) {
             onClick={closeMobileMenu}>Emprendedores </Link>
             </li> 
 
-
-            
-            
-            </ul>
+         </ul>
 
 
-);
+
 
 
          

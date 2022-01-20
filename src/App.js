@@ -28,7 +28,7 @@ function App() {
          <Navigation navigationStatus = {navigationStatus} setNavigationStatus = {setNavigationStatus}/>
         
       
-         <div className = "container ">
+         <div className = "contenedor ">
        
          <Routes>
        
