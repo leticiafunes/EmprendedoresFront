@@ -59,7 +59,7 @@ export default function CreateUser() {
   const borrarUser =  async (id) => {
 
    
-    await axios.delete ('process.env.REACT_APP_INITIAL_PATH +/api/users/'+ id)
+    await axios.delete (process.env.REACT_APP_INITIAL_PATH +'/api/users/'+ id)
     
     obtenerDatos ();
     

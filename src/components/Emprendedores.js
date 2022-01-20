@@ -78,6 +78,7 @@ export default function Emprendedores({ setNavigationStatus }) {
 
   return (
     <div className="pantallaEmprendedores">
+      
       <div className="modalEmprendedor">
         {showModal ? (
           <EmprendedorModal
