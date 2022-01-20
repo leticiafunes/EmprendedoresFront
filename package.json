@@ -2,8 +2,9 @@
   "name": "frontend",
   "version": "0.1.0",
   "engines": {
-    "node": "v14.16.1"
- },
+    "node": "v14.16.1",  
+    "npm":"6.14.12"
+   }, 
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
