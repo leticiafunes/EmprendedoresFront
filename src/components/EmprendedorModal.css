@@ -20,34 +20,49 @@
 
 #modal .containerModal {
   position: fixed;
+  width: 100%;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: auto;
-  margin-bottom: 5px;
-  margin-top: 5px;
-  top: 0;
+  top: 5px;
   left: 0;
   right: 0;
   background: rgba(0, 0, 0, 0.7);
 }
 
-.containerModal .modal {
-  position: relative;
+
+.modal {
+  position: fixed;
+  
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 85%;
-  background: var(--darkgray);
+  width: 90%;
+  height: 100%;
+  margin: auto;
+  background: rgba(0, 0, 0, 0.7);
   border-radius: 5px;
   animation: animate 0.3s;
-}
+  
+}   
 
-.modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+
+.headerModal {
+    
+  display: grid;
+  grid-template-columns: 1fr;
+  background: var(--modo);
+  color: var(--darkgray);
+  font-weight: 700;
   border: none;
+  padding: 5px;
+  margin: 5px;
+  width: 90%;
+
+
+ 
 }
 
 .modal-content {
@@ -76,18 +91,19 @@
   cursor: pointer;
 }
 
-.modal-dialog-modal {
-  position: relative;
-  border-radius: 5px;
-  background: var(--modo);
-  overflow: auto;
-  cursor: default;
-  width: 100%;
-  height: auto;
-  margin: 2%;
+.imagenContainer {
+
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
 }
 
-.imagenContainer {
+
+.tituloContainer {
+
+  display: grid;
+  grid-template-columns: 1fr;
+  text-align: center;
   background: var(--modo);
   color: var(--white);
   font-weight: 700;
@@ -100,6 +116,8 @@
   display: grid;
   grid-template-columns: 1fr;
   margin: 2%;
+  height: 100%
+  
 }
 
 .etiqueta {
@@ -117,6 +135,7 @@
   background: var(--modo);
   color: var(--black);
   padding: 5px;
+  
 }
 
 .contactoContainer {
@@ -130,7 +149,7 @@
 .footerModal {
   display: grid;
   grid-template-columns: 0.3fr 1fr;
-
+  width: 90%;
   background: var(--modo);
   color: var(--darkgray);
   font-weight: 700;
@@ -157,6 +176,7 @@
   font-weight: bold;
   margin-top: 5px;
   visibility: visible;
+ 
 }
 
 .botonCerrarAncho {
@@ -167,10 +187,11 @@
   font-weight: bold;
   margin-top: 5px;
   visibility: hidden;
-}
 
+}
 .imagenModal {
-  width: 100%;
+  width: 255px;
+  height: 255px;
 }
 
 .listaRedes {
@@ -180,7 +201,27 @@
 
 }
 
+
+.modalTarjeta {
+
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+ 
+  background: var(--white);
+  cursor: default;
+  width: 90%;
+  height:90%;
+  overflow:auto;
+ 
+ 
+
+}
+
 @media screen and (min-width: 820px) {
+  
+  
   .botonCerrar {
     visibility: hidden;
   }
@@ -193,18 +234,7 @@
     grid-template-columns: 1fr 0.1fr;
   }
 
-  .modal-dialog-modal {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    max-width: 1200px;
-    max-height: 80vh;
-    border-radius: 5px;
-    background: var(--white);
-    overflow: auto;
-    cursor: default;
-    width: 95%;
-    height: auto;
-  }
+
 }
 
 @keyframes animate {

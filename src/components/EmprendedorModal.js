@@ -24,7 +24,7 @@ export function EmprendedorModal({
       setShowModal(false); //Se cierra. Ver que puedo actualizar el state del padre.
       setNavigationStatus(true); //Actualizo el state del abuelo.
     }
-    if (e.target === botonCerrarRef.current) {
+      if (e.target === botonCerrarRef.current) {
       //Si hago click en el contenedor y actualmente está activo. Dentro de un section
       setShowModal(false); //Se cierra. Ver que puedo actualizar el state del padre.
       setNavigationStatus(true); //Actualizo el state del abuelo.
@@ -58,92 +58,101 @@ export function EmprendedorModal({
   };
 
   return ReactDom.createPortal(
-    <div className="containerModal" ref={modalRef} onClick={closeModal}>
-      <div className="modal" id={emprendedor._id}>
-        <div className="modal-dialog-modal">
-          <div className="imagenContainer">
-            <section className="modalTitulo">
-              <div className="marcaEmprendedorCoontainer">
-                <h3 className="marcaEmprendimiento">
-                  {emprendedor.nombre_emprendimiento}
-                </h3>
-              </div>
+    <div className="modal" ref={modalRef} onClick={closeModal}>
+      <div className= "modalTarjeta">
+    
+      <header className = "headerModal">
+      
+      <div className="tituloContainer">
+         
+         <section className="modalTitulo">
+           <div className="marcaEmprendedorCoontainer">
+             <h3 className="marcaEmprendimiento">
+               {emprendedor.nombre_emprendimiento}
+             </h3>
+           </div>
 
-              <div className="botonCerrar">
-                <i
-                  className="fas fa-times"
-                  ref={botonCerrarRef}
-                  onClick={closeModal}
-                />
-              </div>
-            </section>
+           <div className="botonCerrar">
+             <i
+               className="fas fa-times"
+               ref={botonCerrarRef}
+               onClick={closeModal}
+             />
+           </div>
+         </section>
+      
+      
+       <div className="imagenContainer">
+       <img 
+           className="imagenModal"
+           src={emprendedor.imagen}
+           alt={emprendedor.nombre_emprendimiento}
+         />
+       </div>
+       
 
-            <img
-              className="imagenModal"
-              src={emprendedor.imagen}
-              alt={emprendedor.nombre_emprendimiento}
+       </div>
+
+        <div className="resenaContainer">
+          <div className="resena">
+            <section className="etiqueta">Nuestro emprendimiento: </section>
+            <section className="resena">{emprendedor.resena}</section>
+          </div>
+
+          <div className="botonCerrarAncho">
+            <i
+              className="fas fa-times"
+              ref={botonCerrarRef2}
+              onClick={closeModal}
             />
           </div>
-
-          <div className="resenaContainer">
-            <div className="resena">
-              <section className="etiqueta">Nuestro emprendimiento: </section>
-              <section className="resena">{emprendedor.resena}</section>
-            </div>
-
-            <div className="botonCerrarAncho">
-              <i
-                className="fas fa-times"
-                ref={botonCerrarRef2}
-                onClick={closeModal}
-              />
-            </div>
-          </div>
-
-          <div className="contactoContainer">
-            <div>
-              <section className="resena">
-                <span className="etiqueta">Contáctenos: </span>
-              </section>
-
-              <section className="resena">
-                <span className="etiqueta">Tel : </span> {emprendedor.telefono}
-              </section>
-              <section className="resena">
-                <span className="etiqueta">Mail : </span> {emprendedor.mail}
-              </section>
-            </div>
-          </div>
-     
-
-          <footer className="footerModal">
-     
-            <div htmlFor="nombre_id" className="etiqueta">
-              {" "}
-              Redes
-            </div>
-            <div className= "listaRedes">
-            {emprendedor.redes &&
-              emprendedor.redes.map((red, indice) => (
-                <div className="row mb-3" key={indice}>
-                  <a href={emprendedor.redes[indice].link}>
-                    {buscarIconoRed(emprendedor.redes[indice].nombre) && (
-                      <i
-                        className={buscarIconoRed(
-                          emprendedor.redes[indice].nombre
-                        )}
-                      />
-                    )}
-                    {!buscarIconoRed(emprendedor.redes[indice].nombre) &&
-                      emprendedor.redes[indice].nombre}{" "}
-                  </a>
-                </div>
-              ))}
-              </div>
-          </footer>
         </div>
+
+        <div className="contactoContainer">
+          <div>
+            <section className="resena">
+              <span className="etiqueta">Contáctenos: </span>
+            </section>
+
+            <section className="resena">
+              <span className="etiqueta">Tel : </span> {emprendedor.telefono}
+            </section>
+            <section className="resena">
+              <span className="etiqueta">Mail : </span> {emprendedor.mail}
+            </section>
+          </div>
+        </div>
+      </header>
+
+      <footer className="footerModal">
+        <div htmlFor="nombre_id" className="etiqueta">
+          {" "}
+          Redes
+        </div>
+        <div className="listaRedes">
+          {emprendedor.redes &&
+            emprendedor.redes.map((red, indice) => (
+              <div className="row mb-3" key={indice}>
+                <a href={emprendedor.redes[indice].link}>
+                  {buscarIconoRed(emprendedor.redes[indice].nombre) && (
+                    <i
+                      className={buscarIconoRed(
+                        emprendedor.redes[indice].nombre
+                      )}
+                    />
+                  )}
+                  {!buscarIconoRed(emprendedor.redes[indice].nombre) &&
+                    emprendedor.redes[indice].nombre}{" "}
+                </a>
+              </div>
+            ))}
+        </div>
+      </footer>
       </div>
+     
+
     </div>,
+
     document.getElementById("modal")
   );
 }

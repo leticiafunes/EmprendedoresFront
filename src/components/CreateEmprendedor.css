@@ -52,7 +52,18 @@
   
   .grabarEmprendedor {
     padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
     border: 3px solid var(--tarjeta);
+    background: var(--tarjeta);
+    color: var(--white);
 
   }
   
+  .tituloCrearEmprendedorContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+
+  }

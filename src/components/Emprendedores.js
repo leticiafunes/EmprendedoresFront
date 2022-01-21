@@ -80,6 +80,7 @@ export default function Emprendedores({ setNavigationStatus }) {
     <div className="pantallaEmprendedores">
       
       <div className="modalEmprendedor">
+      
         {showModal ? (
           <EmprendedorModal
             setShowModal={setShowModal}
@@ -161,7 +162,7 @@ export default function Emprendedores({ setNavigationStatus }) {
                   className="btn btn-outline-secondary  btn-sm oculto"
                   to={"/"}
                 >
-                  <i class="fas fa-user-edit"></i>
+                  <i className="fas fa-user-edit"></i>
                 </Link>
     
                </div>
@@ -176,7 +177,7 @@ export default function Emprendedores({ setNavigationStatus }) {
                   title="Editar Emprendedor"
                   to={"/emprendedores/edit/" + emprendedor._id}
                 >
-                  <i class="fas fa-user-edit"></i>
+                  <i className="fas fa-user-edit"></i>
                 </Link>
               </div>
          

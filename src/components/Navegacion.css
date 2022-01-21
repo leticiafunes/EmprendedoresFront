@@ -1,6 +1,6 @@
 :root {
   --darkgray: #3a3836;
-  --gray: #978b7b;
+  --gray: #585755;
   --orange: #ff9000;
   --cian: #037c03;
   --yellow: #dca305;
@@ -125,14 +125,13 @@ body {
   display: grid;
   grid-template-columns: auto;
   text-align: end;
-  width: 50%;
+  width: 40%;
   transition: all 0.5s ease;
   position: absolute;
   top: 80px;
   background: var(--darkgray);
   left: -100%;
-  opacity: 0;
-
+  opacity: 1;
   padding: 0;
   list-style: none;
   z-index: 1;
@@ -151,7 +150,8 @@ body {
   line-height: 60px;
   width: 100%;
   display: table;
-  background: var(--darkgray);
+  background: var(--gray);
+
 }
 
 .nav-links:hover {

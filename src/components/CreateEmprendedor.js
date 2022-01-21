@@ -68,6 +68,13 @@ export default function CreateEmprendedor(props) {
     setEmprendedor({ ...emprendedor, [e.target.name]: e.target.checked });
   };
 
+
+
+  const mostrarMensaje = (mensaje) => {
+    alert(mensaje);
+  }
+
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -86,32 +93,48 @@ export default function CreateEmprendedor(props) {
     };
 
     if (edit.editing) {
-      await axios.put(
-        process.env.REACT_APP_INITIAL_PATH + "/api/emprendedores/" + edit._id,
-        updateEmprendedor
-      );
+
+      try {
+        await axios.put(
+          process.env.REACT_APP_INITIAL_PATH + "/api/emprendedores/" + edit._id,
+          updateEmprendedor
+        );
+        mostrarMensaje ('Emprendedor Grabado Exitosamente');
+       } catch (err) {
+        mostrarMensaje ('Fallo al grabar Emprendedor: ', err);
+       
+       }
+   
     } else {
+      try{
       await axios.post(
         process.env.REACT_APP_INITIAL_PATH + "/api/emprendedores/",
         updateEmprendedor
-      );
+        );
+        mostrarMensaje ('Emprendedor Grabado Exitosamente');
+       } catch (err) {
+        mostrarMensaje ('Fallo al grabar Emprendedor: ', err);
+       
+       }
     }
 
-    //window.location.href = "/emprendedores";
+   
   };
 
   const openWidget = () => {
+    console.log (process.env.REACT_APP_CLOUDINARY_CLOUDNAME);
     var myWidget = window.cloudinary.createUploadWidget(
+    
+       
+
       {
-        cloudName: "dlujwnnwv",
-        uploadPreset: "emprendedores",
+        cloudName: process.env.REACT_APP_CLOUDINARY_CLOUDNAME,
+        uploadPreset:  process.env.REACT_APP_CLOUDINARY_UPLOADPRESET
       },
       (error, result) => {
         if (!error && result && result.event === "success") {
-          console.log(
-            "La imagen subió correctamente. Aquí está el link: ",
-            result.info.secure_url
-          );
+          mostrarMensaje ("La imagen subió correctamente. Aquí está el link: " + result.info.secure_url)
+         
           const imageurl = result.info.secure_url;
 
           setEmprendedor({ ...emprendedor, imagen: imageurl });
@@ -161,10 +184,30 @@ export default function CreateEmprendedor(props) {
     }
   };
 
+
+  const volverEmprendedores = () => {
+    window.location.href = "/emprendedores";
+  }
+
+
   return (
     <form className="formCrearEmprendedor" onSubmit={onSubmit}>
+      <div className= "tituloCrearEmprendedorContainer">
       <div className="titulo"> {edit.editing && <p>Editar Emprendedor</p>}</div>
       <div className="titulo"> {!edit.editing && <p>Crear Emprendedor</p>}</div>
+
+      <div className="col-sm-2">
+          <label className="col-sm-6 col-form-label oscuro">
+            Volver
+          </label>
+
+          <button type="button" className="icono " onClick={volverEmprendedores}>
+             <i className="fas fa-arrow-right"></i>
+          </button>
+      </div>
+      </div>
+      
+
 
       <div className="row mb-3">
         <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
@@ -334,7 +377,7 @@ export default function CreateEmprendedor(props) {
             Logo
           </label>
 
-          <button className="icono " onClick={openWidget}>
+          <button type="button" className="icono " onClick={openWidget}>
             <FontAwesomeIcon icon={faSearch} />
           </button>
         </div>
@@ -364,7 +407,7 @@ export default function CreateEmprendedor(props) {
                   Redes
                 </label>
 
-                <button onClick={agregarRed} className="icono">
+                <button type="button" type="button" onClick={agregarRed} className="icono">
                   <i className="fas fa-plus"></i>
                 </button>
               </div>
@@ -377,14 +420,14 @@ export default function CreateEmprendedor(props) {
                   className="col-sm-6 col-form-label"
                 ></label>
 
-                <button onClick={agregarRed}></button>
+                <button onClick={agregarRed} type="button"></button>
               </div>
             )}
 
             <div className="col-sm-10">
               <div className="row mb-3">
                 <div className="col-sm-1">
-                  <button className="icono" onClick={() => borrarRed(indice)}>
+                  <button className="icono" type="button" onClick={() => borrarRed(indice)}>
                     <i className="fas fa-times"></i>
                   </button>
                 </div>
@@ -442,7 +485,7 @@ export default function CreateEmprendedor(props) {
 
       <div className="grabarEmprendedorContainer">
         <button type="submit" className="grabarEmprendedor">
-          Grabar Emprendedor
+          Guardar
         </button>
       </div>
     </form>

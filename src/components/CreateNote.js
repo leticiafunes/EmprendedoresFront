@@ -139,11 +139,6 @@ export default function CreateNote(props) {
     window.location.href ='/';
   };
 
-  const clearInputs = () => {
-    const fecha = new Date();
-
-    setNota({ ...nota, date: fecha, title: "", content: "", author: "" });
-  };
 
   return (
     <div className="col-md-6 offset-md-3">
