@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 
 
-export default function CreateUser() {
+export default function Usuarios() {
 
 
   const [users, setUsers] = useState([]);

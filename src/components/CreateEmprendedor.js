@@ -196,7 +196,7 @@ export default function CreateEmprendedor(props) {
       <div className="titulo"> {edit.editing && <p>Editar Emprendedor</p>}</div>
       <div className="titulo"> {!edit.editing && <p>Crear Emprendedor</p>}</div>
 
-      <div className="col-sm-2">
+      <div className="btnVolver">
           <label className="col-sm-6 col-form-label oscuro">
             Volver
           </label>
@@ -487,6 +487,10 @@ export default function CreateEmprendedor(props) {
         <button type="submit" className="grabarEmprendedor">
           Guardar
         </button>
+        <button type="button" className="cancelarEmprendedor" onClick={volverEmprendedores}>
+          Cancelar
+        </button>
+        
       </div>
     </form>
   );

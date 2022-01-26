@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext} from "react";
 import axios from "axios";
 //import moment from 'moment';
 
@@ -9,6 +9,8 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 import { EmprendedorModal } from "./EmprendedorModal";
+import SessionContext from "../context/SessionContext";
+
 
 export default function Emprendedores({ setNavigationStatus }) {
   const [emprendedores, setEmprendedores] = useState([]);
@@ -16,6 +18,9 @@ export default function Emprendedores({ setNavigationStatus }) {
   const [busqueda, setBusqueda] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [emprendedor, setEmprendedor] = useState("");
+  const {session, handleSession, closeSession } = useContext(SessionContext); //Para leer la Session  global
+
+
 
   useEffect(() => {
     obtenerDatos();
@@ -76,6 +81,28 @@ export default function Emprendedores({ setNavigationStatus }) {
     setShowModal(true);
   };
 
+
+   const botonEditar = () => {
+    {
+
+  
+      if (session.username) {
+  
+         return (
+          "btn btn-outline-secondary  btn-sm"
+          );
+  
+      }     
+  
+      return ( "btn btn-outline-secondary  btn-sm oculto" )
+  
+     
+    }
+  
+
+     
+   }
+
   return (
     <div className="pantallaEmprendedores">
       
@@ -107,7 +134,8 @@ export default function Emprendedores({ setNavigationStatus }) {
           </div>
         </div>
 
-        <div className="btnNuevoContainer ">
+        
+        {session.username && <div className="btnNuevoContainer ">
           <Link
             className="btn btn-outline-secondary btn-sm sinBorde"
             to={"/emprendedores/create"}
@@ -120,7 +148,9 @@ export default function Emprendedores({ setNavigationStatus }) {
               <i className="fas fa-plus"></i>
             </button>
           </Link>
-        </div>
+        </div>}
+
+
       </div>
 
       <div className="marcaEmprendimiento">¡Aquí encontrarás de todo!</div>
@@ -172,13 +202,15 @@ export default function Emprendedores({ setNavigationStatus }) {
               </button>
             
               <div className="editarEmprendedorCoontainer">
+               
                 <Link
-                  className="btn btn-outline-secondary  btn-sm"
+                  className= {botonEditar()}
                   title="Editar Emprendedor"
                   to={"/emprendedores/edit/" + emprendedor._id}
                 >
                   <i className="fas fa-user-edit"></i>
                 </Link>
+
               </div>
          
             </div>

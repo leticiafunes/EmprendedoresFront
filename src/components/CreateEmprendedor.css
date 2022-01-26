@@ -46,7 +46,8 @@
   .grabarEmprendedorContainer {
     display: flex;
     align-items: center;
-    justify-content: center;
+     justify-content: space-around;
+
     color: var (--black);
   }
   
@@ -56,6 +57,16 @@
     padding-right: 15px;
     border: 3px solid var(--tarjeta);
     background: var(--tarjeta);
+    color: var(--white);
+
+  }
+
+  .cancelarEmprendedor {
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 3px solid var(--tarjeta);
+    background: var(--gray);
     color: var(--white);
 
   }

@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import {Link} from 'react-router-dom'
 
 import { useState} from "react";
 import './Navegacion.css';
-
+import ThemeContext from "../context/ThemeContext";
+import LanguageContext from "../context/LanguageContext";
+import SessionContext from "../context/SessionContext";
 
 export default function Navegacion ({navigationStatus,setNavigationStatus}) {
 
     
     const [click, setClick] = useState(false);
 
-    
+    const {theme, handleTheme} = useContext(ThemeContext) //Para leer el theme global
+    const {texts, handleLanguage} = useContext(LanguageContext) //Para leer el lenguage global
+    const {session, handleSession, closeSession } = useContext(SessionContext); //Para leer la Session  global
+
 
 
     const handleClick = () => {
@@ -26,15 +31,49 @@ export default function Navegacion ({navigationStatus,setNavigationStatus}) {
     }
 
 
+   const aLogin = () => {
+      
+      closeMobileMenu ();
+      
+
+   }
+
+    const loginTitulo = () => {
+
+     
+      if (session.username) {
+
+         return (
+            <span>
+              {session.username}
+            </span>
+          );
+
+      }
+      else {
+         return (
+            <span>
+              Login
+            </span>
+          );
+
+
+
+      }
+
+     
+    }
+
 
   return (
 
 
     <div className="nav-container">
+
      <nav className="navbar">
        
-            
-
+  
+        
         
 
          <div  className = "navLogoContainer"  >
@@ -42,12 +81,11 @@ export default function Navegacion ({navigationStatus,setNavigationStatus}) {
           <img className= "navImagenLogo" src={"./images/emprendedoresLogo.png"}
           alt="Emprendedor" />
           
-          <Link className="navLetrasLogo" to='/'> Emprendedores Andinos</Link>
+          <Link className="navLetrasLogo" to='/'> Emprendedores Andinos </Link>
 
-        
          </div>
       
-
+         
  
          <div className={(click&&navigationStatus) ? 'menu-toggle is-active' : 'menu-toggle' }   onClick={handleClick} id="mobile-menu">
              <span className="bar"></span>
@@ -55,19 +93,41 @@ export default function Navegacion ({navigationStatus,setNavigationStatus}) {
              <span className="bar"></span>
          </div>
          
-         
+        
        
          <ul className={(click&&navigationStatus) ? 'nav-menu active' : 'nav-menu' }>
 
+      
+            <li className="item-lista" >
+             
+               <Link className='nav-links'  to ="/login" id="logueado" onClick={aLogin}> {loginTitulo()}
+               
+               {session.username && 
+               
+               <ul id= "listaSalir">
+                 <li onClick= {closeSession} >Salir</li>
+               </ul>  }
+               
+               </Link>
+            </li>
+  
+       
+
+            {session.username && 
             <li className="item-lista">
                <Link className='nav-links' to ="/" onClick={closeMobileMenu}> Notas </Link>
-            </li>
+            </li>}
+            {session.username &&  
             <li className="item-lista">
-               <Link className='nav-links' to ="/create" onClick={closeMobileMenu}> Nueva Nota </Link>
-            </li>
-            <li className="item-lista">
-             <Link className='nav-links' to ="/user" onClick={closeMobileMenu}> Crear Usuario </Link>
-            </li>
+               <Link className='nav-links' to ="/create" onClick={closeMobileMenu} > Nueva Nota </Link>
+            </li>}
+           
+            {session.username &&  <li className="item-lista">
+             <Link className='nav-links' to ="/user" onClick={closeMobileMenu} > Crear Usuario </Link>
+            </li>}
+          
+      
+            
 
             <li className="item-lista">
             <Link className='nav-links' 
@@ -82,6 +142,8 @@ export default function Navegacion ({navigationStatus,setNavigationStatus}) {
             onClick={closeMobileMenu}>Emprendedores </Link>
             </li> 
 
+
+
          </ul>
 
 
@@ -90,7 +152,8 @@ export default function Navegacion ({navigationStatus,setNavigationStatus}) {
 
          
      </nav> 
-    </div>
+
+     </div>
  
  
  
