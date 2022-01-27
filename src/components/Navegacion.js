@@ -81,7 +81,7 @@ export default function Navegacion ({navigationStatus,setNavigationStatus}) {
           <img className= "navImagenLogo" src={"./images/emprendedoresLogo.png"}
           alt="Emprendedor" />
           
-          <Link className="navLetrasLogo" to='/'> Emprendedores Andinos </Link>
+          <Link className="navLetrasLogo" to='/'> </Link>
 
          </div>
       
@@ -132,11 +132,7 @@ export default function Navegacion ({navigationStatus,setNavigationStatus}) {
             <li className="item-lista">
             <Link className='nav-links' 
             
-            to={{
-               pathname: "/emprendedores" ,
-               search: "?sort=name",
-               hash: "#the-hash",
-               state: { fromDashboard: true }
+            to={{ pathname: "/emprendedores"    
              }}
             
             onClick={closeMobileMenu}>Emprendedores </Link>

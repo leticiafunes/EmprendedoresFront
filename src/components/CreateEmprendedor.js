@@ -1,10 +1,26 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { useParams } from "react-router-dom"; //hook
+import { useParams, useNavigate } from "react-router-dom"; //hook
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import "./CreateEmprendedor.css";
+
+
+function HomeButton() {
+  const navigate = useNavigate();
+
+  function handleClick() {
+    navigate("/home");
+  }
+
+  return (
+    <button type="button" onClick={handleClick}>
+      Go home
+    </button>
+  );
+}
+
 
 export default function CreateEmprendedor(props) {
   const [edit, setEdit] = useState({ editing: false, id: "" });
@@ -22,6 +38,9 @@ export default function CreateEmprendedor(props) {
     rubro: "",
     descripcioncorta: "",
   });
+
+  const navigate = useNavigate();
+
 
   const { id } = useParams(); //Para ver que emprendedor tengo que editar
 
@@ -186,7 +205,7 @@ export default function CreateEmprendedor(props) {
 
 
   const volverEmprendedores = () => {
-    window.location.href = "/emprendedores";
+    navigate('/emprendedores')
   }
 
 

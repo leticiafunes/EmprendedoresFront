@@ -48,7 +48,6 @@ export default function Login(props) {
       password: user.password,
       nivel: user.nivel,
     };
-
   
     if (!session.username) {
       try {
@@ -63,6 +62,7 @@ export default function Login(props) {
            
             const nuevaSession = res.data[0];
             handleSession(nuevaSession); //En session están guardados los datos del usuario que LOGRO loguearse
+            
           } else {
            
             mostrarMensaje("Usuario o Clave Incorrecta");

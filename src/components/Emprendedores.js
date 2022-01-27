@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import { EmprendedorModal } from "./EmprendedorModal";
 import SessionContext from "../context/SessionContext";
 
+import "./Animaciones.css";
+
 
 export default function Emprendedores({ setNavigationStatus }) {
   const [emprendedores, setEmprendedores] = useState([]);
@@ -53,7 +55,7 @@ export default function Emprendedores({ setNavigationStatus }) {
 
   function incluyeElemento(elemento, busqueda) {
     return (
-      elemento.nombre
+      elemento.nombre_emprendimiento
         .toString()
         .toLowerCase()
         .includes(busqueda.toLowerCase()) ||
@@ -153,7 +155,13 @@ export default function Emprendedores({ setNavigationStatus }) {
 
       </div>
 
-      <div className="marcaEmprendimiento">¡Aquí encontrarás de todo!</div>
+      
+      <div className="tituloAnimado">
+             <div className="animadoTitulo"> Todo lo que buscás.... </div> 
+             <div className="animadoTitulo"> <span>EN UN SOLO LUGAR! </span> </div>
+
+     
+      </div>
 
       <div className="emprendedoresContainer">
         {emprendedores.map((emprendedor, index) => (

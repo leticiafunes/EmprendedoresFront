@@ -135,11 +135,7 @@ export function EmprendedorModal({
               <div className="row mb-3" key={indice}>
                 <a href={emprendedor.redes[indice].link} target="_blank">
                   {buscarIconoRed(emprendedor.redes[indice].nombre) && (
-                    <i
-                      className={buscarIconoRed(
-                        emprendedor.redes[indice].nombre
-                      )}
-                    />
+                    <i className={buscarIconoRed(emprendedor.redes[indice].nombre)}/>
                   )}
                   {!buscarIconoRed(emprendedor.redes[indice].nombre) &&
                     emprendedor.redes[indice].nombre}{" "}
