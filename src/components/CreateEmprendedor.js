@@ -7,21 +7,6 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import "./CreateEmprendedor.css";
 
 
-function HomeButton() {
-  const navigate = useNavigate();
-
-  function handleClick() {
-    navigate("/home");
-  }
-
-  return (
-    <button type="button" onClick={handleClick}>
-      Go home
-    </button>
-  );
-}
-
-
 export default function CreateEmprendedor(props) {
   const [edit, setEdit] = useState({ editing: false, id: "" });
 
@@ -40,6 +25,7 @@ export default function CreateEmprendedor(props) {
   });
 
   const navigate = useNavigate();
+
 
 
   const { id } = useParams(); //Para ver que emprendedor tengo que editar

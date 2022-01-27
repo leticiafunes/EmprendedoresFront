@@ -7,11 +7,12 @@ import "./App.css";
 
 import Navigation from "./components/Navegacion";
 import CreateNote from "./components/CreateNote";
-import CreateUser from "./components/CreateUser";
+import Users from "./components/Users";
 import NotesList from "./components/NotesList";
 import Emprendedores from "./components/Emprendedores";
 import CreateEmprendedor from "./components/CreateEmprendedor";
 import Login from "./components/Login";
+import NuevoUsuario from "./components/NuevoUsuario";
 import { ThemeProvider } from "./context/ThemeContext";
 import { LanguageProvider } from "./context/LanguageContext";
 import { SessionProvider } from "./context/SessionContext";
@@ -33,13 +34,13 @@ function App() {
 
         <div className="contenedor ">
           <Routes>
-            <Route path="/" element={<NotesList />} />
+            <Route path="/" element={<Emprendedores setNavigationStatus={setNavigationStatus} /> } />
 
             <Route path="/edit/:id" element={<CreateNote />} />
 
             <Route path="/create" element={<CreateNote />} />
 
-            <Route path="/user" element={<CreateUser />} />
+            <Route path="/user" element={<Users />} />
             
             <Route path="/login" element={<Login />} />
 
@@ -59,6 +60,18 @@ function App() {
               path="/emprendedores/edit/:id"
               element={<CreateEmprendedor />}
             />
+
+              <Route
+              path="/user/create"
+              element={<NuevoUsuario />}
+            />
+
+              <Route
+              path="/user/edit/:id"
+              element={<NuevoUsuario />}
+            />
+
+
           </Routes>
         </div>
       </Router>

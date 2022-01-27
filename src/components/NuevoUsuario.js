@@ -1,12 +1,17 @@
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { useParams } from "react-router-dom"; //hook
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import SessionContext from "../context/LanguageContext";
+import { useNavigate, useParams } from "react-router-dom"; //hook
 
-import "./NuevoUsuario.css";
+import "./Login.css";
+
+
+
+
+
 
 export default function NuevoUsuario(props) {
   
@@ -19,39 +24,46 @@ export default function NuevoUsuario(props) {
   const [user, setUser] = useState({
     username: "",
     password: "",
-    nivel: 0
+    nivel: 0,
+    nombre: "",
+    apellido: ""
   });
 
-  
+  const navigate = useNavigate();
+
+  const { id } = useParams(); //Para ver que user tengo que editar
 
   useEffect(() => {
    
     const obtenerDatos = async () => {
-     
-      if (login.length > 0) {     //En login están los datos del usuario que INTENTA Loguearse
+
+      if(id) {
+      
         const res = await axios.get(
-          process.env.REACT_APP_INITIAL_PATH + "/api/users/userbyusername/" + login.trim()
+          process.env.REACT_APP_INITIAL_PATH + "/api/users/"+ id 
         );
-
+  
         if (res.data) {
-          const new_user = res.data;
-
+          const user = res.data;
+  
           setUser({
             ...user,
-            username: new_user.username,
-            password: new_user.password,
-            nivel: new_user.nivel,
+            username: user.username,
+            password: user.password,
+            nivel: user.nivel,
+            nombre: user.nombre,
+            apellido: user.apellido
           });
-
-          handleSession (user);   //En session están guardados los datos del usuario que LOGRO loguearse
+          
+          setEdit({ ...edit, editing: true, _id: id });
         }
+  
       }
-    };
-
+    }
     obtenerDatos();
-
-   
   }, []);
+
+
 
   const updateUser = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -76,6 +88,8 @@ export default function NuevoUsuario(props) {
       username: user.username,
       password: user.password,
       nivel: user.nivel,
+      nombre: user.nombre,
+      apellido: user.apellido
     };
 
     if (edit.editing) {
@@ -85,9 +99,9 @@ export default function NuevoUsuario(props) {
           process.env.REACT_APP_INITIAL_PATH + "/api/users/" + edit._id,
           updateUser
         );
-        mostrarMensaje ('user Grabado Exitosamente');
+        mostrarMensaje ('Usuario Editado Exitosamente');
        } catch (err) {
-        mostrarMensaje ('Fallo al grabar User: ', err);
+        mostrarMensaje ('Fallo al grabar Usuario: ', err);
        
        }
    
@@ -97,9 +111,9 @@ export default function NuevoUsuario(props) {
         process.env.REACT_APP_INITIAL_PATH + "/api/users/",
         updateUser
         );
-        mostrarMensaje ('User Grabado Exitosamente');
+        mostrarMensaje ('Usuario Grabado Exitosamente');
        } catch (err) {
-        mostrarMensaje ('Fallo al grabar user: ', err);
+        mostrarMensaje ('Fallo al grabar Usuario: ', err);
        
        }
     }
@@ -107,19 +121,17 @@ export default function NuevoUsuario(props) {
    
   };
 
-
-
   const volverUsers = () => {
-    window.location.href = "/user";
+    navigate('/user');
   }
 
 
   return (
-  
+  <div >
   <form className="formCrearUser" onSubmit={onSubmit}>
     <div className= "tituloCrearUserContainer">
       <div className="titulo"> {edit.editing && <p>Editar usuario</p>}</div>
-      <div className="titulo"> {!edit.editing && <p>Crear usuario</p>}</div>
+      <div className="titulo"> {!edit.editing && <p>Nuevo usuario</p>}</div>
 
       <div className="btnVolver">
           <label className="col-sm-6 col-form-label oscuro">
@@ -135,12 +147,12 @@ export default function NuevoUsuario(props) {
       
 
 
-      <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
+      <div className="row mb-4">
+        <label htmlFor="nombre_id" className="col-sm-4 col-form-label oscuro">
           Nombre de Usuario
         </label>
 
-        <div className="col-sm-10">
+        <div className="col-sm-8">
           <input
             type="text"
             className="form-control"
@@ -154,11 +166,11 @@ export default function NuevoUsuario(props) {
       </div>
 
       <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
+        <label htmlFor="nombre_id" className="col-sm-4 col-form-label oscuro">
           Password
         </label>
 
-        <div className="col-sm-10">
+        <div className="col-sm-8">
           <input
             type="text"
             className="form-control"
@@ -166,6 +178,60 @@ export default function NuevoUsuario(props) {
             name="password"
             onChange={updateUser}
             value={user.password}
+            required
+          />
+        </div>
+      </div>
+
+      <div className="row mb-3">
+        <label htmlFor="nombre_id" className="col-sm-4 col-form-label oscuro">
+          Nombre
+        </label>
+
+        <div className="col-sm-8">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Nombre"
+            name="nombre"
+            onChange={updateUser}
+            value={user.nombre}
+            required
+          />
+        </div>
+      </div>
+
+      <div className="row mb-3">
+        <label htmlFor="nombre_id" className="col-sm-4 col-form-label oscuro">
+          Apellido
+        </label>
+
+        <div className="col-sm-8">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Apellido"
+            name="apellido"
+            onChange={updateUser}
+            value={user.apellido}
+            required
+          />
+        </div>
+      </div>
+
+      <div className="row mb-3">
+        <label htmlFor="nombre_id" className="col-sm-4 col-form-label oscuro">
+          Nivel
+        </label>
+
+        <div className="col-sm-8">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Nivel"
+            name="nivel"
+            onChange={updateUser}
+            value={user.nivel}
             required
           />
         </div>
@@ -184,5 +250,6 @@ export default function NuevoUsuario(props) {
         
       </div>
     </form>
+  </div>
   );
 }

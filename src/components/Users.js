@@ -1,9 +1,11 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from 'axios';
+import SessionContext from "../context/SessionContext";
+import { Link } from "react-router-dom";
+import "./Users.css";
 
-
-export default function CreateUser() {
+export default function Users() {
 
 
   const [users, setUsers] = useState([]);
@@ -13,6 +15,7 @@ export default function CreateUser() {
         apellido: ''
  });
   
+ const {session, handleSession, closeSession } = useContext(SessionContext); //Para leer la Session  global
 
 
   useEffect(() => {
@@ -67,58 +70,73 @@ export default function CreateUser() {
     
  };
 
-  return (
-    <div className="row">
-      <div className="col-md-4">
-        <div className="card card-body">
-        <h1>Usuarios</h1>
-          <form onSubmit={guardarUser}>
-            <div className="form-group">
-              <label htmlFor="text"> Nombre: </label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Ingrese username"
-                onChange={onChangeUserName}
-                name= "username"
-                value= {username}
-              />
-                <input
-                type="text"
-                className="form-control"
-                placeholder="Ingrese Nombre"
-                onChange={onChangeNombreApellido}
-                name= "nombre"
-                value= {nombre.nombre}
-              />
-                <input
-                type="text"
-                className="form-control"
-                placeholder="Ingrese Apellido"
-                onChange={onChangeNombreApellido}
-                name= "apellido"
-                value= {nombre.apellido}
-              />
-            </div>
-            <button type="submit" className="btn btn-primary ">
-              Guardar Usuario
-            </button>
-          </form>
 
-     
-        </div>
-      </div>
+
+ const botonEditar = () => {
+  {
+
+
+    if (session.username) {
+
+       return (
+        "btn btn-outline-secondary  btn-sm"
+        );
+
+    }     
+
+    return ( "btn btn-outline-secondary  btn-sm oculto" )
+
+   
+  }
+
+
+   
+ }
+
+
+  return (
+      
+
+    
+    <div className="pantallaUsuarios">
+
+        <h1>Usuarios</h1>
+
       <div className="col-md-8">
         <ul className="list-group">
         {users.map((user) => (
-            <li
-              className="list-group-item list-group-item-action"
+            <li className= "usuariosLinea"
+              
               key={user._id}
               onDoubleClick={()=>borrarUser(user._id) }
               > 
-              {user.username}
+              {user.username} - {user.password} - {user.nombre} - {user.apellido} - {user.nivel}
 
-            </li>
+           
+
+             <div className="editarEmprendedorCoontainer">
+               
+               <Link
+                 className= {botonEditar()}
+                 title="Editar Emprendedor"
+                 to={"/user/edit/" + user._id}
+               >
+                 <i className="fas fa-user-edit"></i>
+               </Link>
+
+             </div>
+
+             {session.username && <div className="editarEmprendedorCoontainer">
+               
+             <button type="button" className="icono " onClick={()=>borrarUser(user._id)}>
+             
+             <i class="far fa-trash-alt"></i>
+             </button>
+
+             </div>}
+
+             </li>
+
           ))}
         </ul>
       </div>

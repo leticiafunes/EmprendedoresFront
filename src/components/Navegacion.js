@@ -111,22 +111,16 @@ export default function Navegacion ({navigationStatus,setNavigationStatus}) {
                </Link>
             </li>
   
-       
 
-            {session.username && 
-            <li className="item-lista">
-               <Link className='nav-links' to ="/" onClick={closeMobileMenu}> Notas </Link>
-            </li>}
-            {session.username &&  
-            <li className="item-lista">
-               <Link className='nav-links' to ="/create" onClick={closeMobileMenu} > Nueva Nota </Link>
-            </li>}
-           
+
+
             {session.username &&  <li className="item-lista">
-             <Link className='nav-links' to ="/user" onClick={closeMobileMenu} > Crear Usuario </Link>
+             <Link className='nav-links' to ="/user" onClick={closeMobileMenu} > Usuarios </Link>
             </li>}
           
-      
+            {session.username &&  <li className="item-lista">
+             <Link className='nav-links' to ="/user/create" onClick={closeMobileMenu} > Crear Usuario </Link>
+            </li>}
             
 
             <li className="item-lista">

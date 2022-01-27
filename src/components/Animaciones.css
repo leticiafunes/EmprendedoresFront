@@ -7,24 +7,27 @@
   margin: 0px;
   padding: 0px;
   border: 0px;
-  color: var(--green);
+  color:var(--tarjeta);
 }
 
-.animadoTitulo:first-of-type {    /* For increasing performance 
+.animadoTitulo1 {    /* For increasing performance 
                        ID/Class should've been used. 
                        For a small demo 
                        it's okaish for now */
   animation: showup 12s infinite;
+
 }
 
-.animadoTitulo:last-of-type {
-  width:0px;
+.animadoTitulo2{
+  width: 50px;
   animation: reveal 12s infinite;
+
 }
 
-.animadoTitulo:last-of-type span {
-  margin-left:-355px;
+.animadoTitulo2>span {
+ 
   animation: slidein 12s infinite;
+ 
 }
 
 @keyframes showup {
@@ -35,8 +38,8 @@
 }
 
 @keyframes slidein {
-    0% { margin-left:-800px; }
-    20% { margin-left:-800px; }
+    0% { margin-left:-200px; }
+    20% { margin-left:-200px; }
     35% { margin-left:0px; }
     100% { margin-left:0px; }
 }
@@ -44,14 +47,36 @@
 @keyframes reveal {
     0% {opacity:0;width:0px;}
     20% {opacity:1;width:0px;}
-    30% {width:355px;}
+    30% {width:170px;}
     80% {opacity:1;}
-    100% {opacity:0;width:355px;}
+    100% {opacity:0;width:170px;}
 }
 
 
-p {
+.panimaciones {
   font-size:12px;
   color:#999;
   margin-top:200px;
+}
+
+
+
+@media screen and (min-width: 768px) {
+
+  @keyframes slidein {
+    0% { margin-left:-400px; }
+    20% { margin-left:-400px; }
+    35% { margin-left:0px; }
+    100% { margin-left:0px; }
+}
+
+@keyframes reveal {
+  0% {opacity:0;width:0px;}
+  20% {opacity:1;width:0px;}
+  30% {width:370px;}
+  80% {opacity:1;}
+  100% {opacity:0;width:370px;}
+}
+
+
 }

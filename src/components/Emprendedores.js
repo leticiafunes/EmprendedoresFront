@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState, useContext} from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 //import moment from 'moment';
 
@@ -13,16 +13,13 @@ import SessionContext from "../context/SessionContext";
 
 import "./Animaciones.css";
 
-
 export default function Emprendedores({ setNavigationStatus }) {
   const [emprendedores, setEmprendedores] = useState([]);
   const [tablaemprendedores, setTablaemprendedores] = useState([]);
   const [busqueda, setBusqueda] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [emprendedor, setEmprendedor] = useState("");
-  const {session, handleSession, closeSession } = useContext(SessionContext); //Para leer la Session  global
-
-
+  const { session, handleSession, closeSession } = useContext(SessionContext); //Para leer la Session  global
 
   useEffect(() => {
     obtenerDatos();
@@ -83,33 +80,19 @@ export default function Emprendedores({ setNavigationStatus }) {
     setShowModal(true);
   };
 
-
-   const botonEditar = () => {
+  const botonEditar = () => {
     {
-
-  
       if (session.username) {
-  
-         return (
-          "btn btn-outline-secondary  btn-sm"
-          );
-  
-      }     
-  
-      return ( "btn btn-outline-secondary  btn-sm oculto" )
-  
-     
-    }
-  
+        return "btn btn-outline-secondary  btn-sm";
+      }
 
-     
-   }
+      return "btn btn-outline-secondary  btn-sm oculto";
+    }
+  };
 
   return (
     <div className="pantallaEmprendedores">
-      
       <div className="modalEmprendedor">
-      
         {showModal ? (
           <EmprendedorModal
             setShowModal={setShowModal}
@@ -136,32 +119,36 @@ export default function Emprendedores({ setNavigationStatus }) {
           </div>
         </div>
 
-        
-        {session.username && <div className="btnNuevoContainer ">
-          <Link
-            className="btn btn-outline-secondary btn-sm sinBorde"
-            to={"/emprendedores/create"}
-          >
-            <button
-              className="iconoAgregar"
-              alt="Agregar Emprendedor"
-              title="Agregar un nuevo Emprendedor"
+        {session.username && (
+          <div className="btnNuevoContainer ">
+            <Link
+              className="btn btn-outline-secondary btn-sm sinBorde"
+              to={"/emprendedores/create"}
             >
-              <i className="fas fa-plus"></i>
-            </button>
-          </Link>
-        </div>}
-
-
+              <button
+                className="iconoAgregar"
+                alt="Agregar Emprendedor"
+                title="Agregar un nuevo Emprendedor"
+              >
+                <i className="fas fa-plus"></i>
+              </button>
+            </Link>
+          </div>
+        )}
       </div>
 
-      
-      <div className="tituloAnimado">
-             <div className="animadoTitulo"> Todo lo que buscás.... </div> 
-             <div className="animadoTitulo"> <span>EN UN SOLO LUGAR! </span> </div>
-
-     
-      </div>
+      {!session.username && (
+        <div className="tituloAnimado">
+          <div className="animadoTitulo animadoTitulo1">
+            {" "}
+            Todo lo que buscás....{" "}
+          </div>
+          <div className="animadoTitulo animadoTitulo2">
+            {" "}
+            <span>EN UN SOLO LUGAR! </span>{" "}
+          </div>
+        </div>
+      )}
 
       <div className="emprendedoresContainer">
         {emprendedores.map((emprendedor, index) => (
@@ -194,33 +181,28 @@ export default function Emprendedores({ setNavigationStatus }) {
               className="irEmprendedorContainer"
               title="Ver información del Emprendedor"
             >
-
-               <div className="editarEmprendedorCoontainer"> 
-               <Link
+              <div className="editarEmprendedorCoontainer">
+                <Link
                   className="btn btn-outline-secondary  btn-sm oculto"
                   to={"/"}
                 >
                   <i className="fas fa-user-edit"></i>
                 </Link>
-    
-               </div>
+              </div>
 
               <button className="irEmprendedor" onClick={handleClick(index)}>
                 Ir a Emprendedor
               </button>
-            
+
               <div className="editarEmprendedorCoontainer">
-               
                 <Link
-                  className= {botonEditar()}
+                  className={botonEditar()}
                   title="Editar Emprendedor"
                   to={"/emprendedores/edit/" + emprendedor._id}
                 >
                   <i className="fas fa-user-edit"></i>
                 </Link>
-
               </div>
-         
             </div>
 
             <div className="claves oculto"> {emprendedor.tags} </div>
