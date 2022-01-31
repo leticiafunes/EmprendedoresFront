@@ -23,9 +23,11 @@ export default function Users() {
   };
 
   const borrarUser = async (id) => {
-    await axios.delete(process.env.REACT_APP_INITIAL_PATH + "/api/users/" + id);
 
+    await axios.delete(process.env.REACT_APP_INITIAL_PATH + "/api/users/" + id);
     obtenerDatos();
+
+
   };
 
   const botonEditar = () => {
@@ -45,8 +47,8 @@ export default function Users() {
           <li className="usuariosLinea">
             <div className="usuarioDatos">
               <div className="oscuro"> Nombre y Apellido</div>
-              <div className="oscuro"> UserName</div>
-              <div className="oscuro"> Password</div>
+              <div className="oscuro"> Nombre de Usuario</div>
+              <div className="oscuro"> Clave</div>
               <div className="oscuro">Nivel</div>
             </div>
           </li>

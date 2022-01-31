@@ -86,17 +86,7 @@ export default function Login(props) {
                 <span className="oscuro">{session.username}</span>
               )}
             </div>
-            <div className="btnVolver">
-              <label className="col-sm-6 col-form-label oscuro">Volver</label>
 
-              <button
-                type="button"
-                className="icono "
-                onClick={volverEmprendedores}
-              >
-                <i className="fas fa-arrow-right"></i>
-              </button>
-            </div>
           </div>
 
           <div className="row mb-3">
@@ -125,7 +115,7 @@ export default function Login(props) {
               htmlFor="nombre_id"
               className="col-sm-4 col-form-label oscuro"
             >
-              Password
+              Clave
             </label>
 
             <div className="col-sm-8">

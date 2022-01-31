@@ -67,22 +67,7 @@ export default function Navegacion({ navigationStatus, setNavigationStatus }) {
         <ul
           className={click && navigationStatus ? "nav-menu active" : "nav-menu"}
         >
-          <li className="item-lista">
-            <Link
-              className="nav-links"
-              to="/login"
-              id="logueado"
-              onClick={aLogin}
-            >
-              {" "}
-              {loginTitulo()}
-              {session.username && (
-                <ul id="listaSalir">
-                  <li onClick={closeSession}>Salir</li>
-                </ul>
-              )}
-            </Link>
-          </li>
+      
 
           {session.username && (
             <li className="item-lista">
@@ -126,6 +111,23 @@ export default function Navegacion({ navigationStatus, setNavigationStatus }) {
               onClick={closeMobileMenu}
             >
               Emprendedores{" "}
+            </Link>
+          </li>
+
+          <li className="item-lista">
+            <Link
+              className="nav-links"
+              to="/login"
+              id="logueado"
+              onClick={aLogin}
+            >
+              {" "}
+              {loginTitulo()}
+              {session.username && (
+                <ul id="listaSalir">
+                  <li onClick={closeSession}>Salir</li>
+                </ul>
+              )}
             </Link>
           </li>
         </ul>

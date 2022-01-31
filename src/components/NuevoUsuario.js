@@ -113,13 +113,7 @@ export default function NuevoUsuario(props) {
             {edit.editing ? <p>Editar usuario</p> : <p>Nuevo usuario</p>}
           </div>
 
-          <div className="btnVolver">
-            <label className="col-sm-6 col-form-label oscuro">Volver</label>
 
-            <button type="button" className="icono " onClick={volverUsers}>
-              <i className="fas fa-arrow-right"></i>
-            </button>
-          </div>
         </div>
 
         <div className="row mb-4">

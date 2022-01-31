@@ -51,7 +51,7 @@ export default function CreateEmprendedor(props) {
             nombre_emprendimiento: new_emprendedor.nombre_emprendimiento,
             rubro: new_emprendedor.rubro,
             descripcioncorta: new_emprendedor.descripcioncorta,
-          });
+          }, []);
 
           setEdit({ ...edit, editing: true, _id: id });
         }
@@ -59,7 +59,7 @@ export default function CreateEmprendedor(props) {
     };
 
     obtenerDatos();
-  });
+  }, []);
 
   const updateEmprendedor = (e) => {
     setEmprendedor({ ...emprendedor, [e.target.name]: e.target.value });
@@ -192,17 +192,7 @@ export default function CreateEmprendedor(props) {
             )}
           </div>
 
-          <div className="btnVolver">
-            <label className="col-sm-6 col-form-label oscuro">Volver</label>
 
-            <button
-              type="button"
-              className="icono "
-              onClick={volverEmprendedores}
-            >
-              <i className="fas fa-arrow-right"></i>
-            </button>
-          </div>
         </div>
 
         <div className="row mb-3">
