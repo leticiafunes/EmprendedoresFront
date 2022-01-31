@@ -13,7 +13,7 @@
   --white: #fff;
   --black: #000000cc;
   --bounceEasing: cubic-bezier(0.51, 0.92, 0.24, 1.15);
-  --fondoEmprendedores: #ecf9fccc;
+  --fondoEmprendedores: #d2e9eecc;
 }
 
 * {
@@ -44,6 +44,7 @@ body {
   top: 0px;
   width: 100%;
   background: var(--fondoEmprendedores);
+  
 
 
 
@@ -92,9 +93,9 @@ body {
   margin-right: 15%;
   margin-bottom: 1%;
   margin-top: 1%;
-  gap: 5px;
+  gap: 15px;
+ 
 }
-
 .tarjetaEmprendedor {
   background: var(--white);
 }
@@ -273,8 +274,8 @@ button {
   .emprendedoresContainer {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    margin: 15px;
     gap: 15px;
+ 
   }
 
   .modal-dialog {

@@ -5,6 +5,13 @@ import SessionContext from "../context/SessionContext";
 import { Link } from "react-router-dom";
 import "./Users.css";
 
+// ES6 Modules or TypeScript
+import Swal from 'sweetalert2'
+
+
+
+
+
 export default function Users() {
   const [users, setUsers] = useState([]);
 
@@ -24,8 +31,29 @@ export default function Users() {
 
   const borrarUser = async (id) => {
 
-    await axios.delete(process.env.REACT_APP_INITIAL_PATH + "/api/users/" + id);
-    obtenerDatos();
+    Swal.fire({
+      title: 'Está seguro que quiere eliminar el usuario?',
+      text: "Esta acción es irreversible!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#8cc2c4',
+      cancelButtonColor: '#ff9000',
+      confirmButtonText: 'Si, eliminar!',
+      cancelButtonText: 'Cancelar',
+
+    }).then((result) => {
+      if (result.isConfirmed) {
+        eliminarUser (id);
+      }
+    })
+
+    const eliminarUser = async (id) => {
+      await axios.delete(process.env.REACT_APP_INITIAL_PATH + "/api/users/" + id);
+      obtenerDatos();
+    }
+    
+    
+
 
 
   };
@@ -70,7 +98,7 @@ export default function Users() {
               <div className="editarEmprendedorCoontainer">
                 <Link
                   className={botonEditar()}
-                  title="Editar Emprendedor"
+                  title="Editar Usuario"
                   to={"/user/edit/" + user._id}
                 >
                   <i className="fas fa-user-edit"></i>

@@ -76,7 +76,7 @@ export default function Login(props) {
       {!session.username && (
         <form className="formCrearUser" onSubmit={onSubmit}>
           <div className="tituloCrearUserContainer">
-            <div>
+            <div className= "tituloLogin">
               {" "}
               {!session.username && <span className="oscuro">Login</span>}
             </div>

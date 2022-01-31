@@ -56,7 +56,16 @@ export default function Emprendedores({ setNavigationStatus }) {
         .toString()
         .toLowerCase()
         .includes(busqueda.toLowerCase()) ||
-      elemento.resena.toString().toLowerCase().includes(busqueda.toLowerCase())
+      elemento.resena
+        .toString()
+        .toLowerCase()
+        .includes(busqueda.toLowerCase()) ||
+      elemento.rubro
+        .toString()
+        .toLowerCase()
+        .includes(busqueda.toLowerCase()) 
+
+
     );
   }
 
@@ -110,7 +119,7 @@ export default function Emprendedores({ setNavigationStatus }) {
             id="input-buscar"
             value={busqueda}
             onChange={handleChange}
-            alt="Agregar Emprendedor"
+            title="Buscar x nombre de emprendimiento o categoría"
           />
 
           <div id="icono-buscar">

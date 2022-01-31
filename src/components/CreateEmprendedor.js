@@ -293,7 +293,6 @@ export default function CreateEmprendedor(props) {
               name="activo"
               onChange={updateEmprendedorActivo}
               value={emprendedor.activo}
-              required
               id="activo"
               checked={emprendedor.activo}
             />

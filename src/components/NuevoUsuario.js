@@ -83,7 +83,8 @@ export default function NuevoUsuario(props) {
           process.env.REACT_APP_INITIAL_PATH + "/api/users/" + edit._id,
           updateUser
         );
-        mostrarMensaje("Usuario Editado Exitosamente");
+      
+        volverUsers ();
       } catch (err) {
         mostrarMensaje("Fallo al grabar Usuario: ", err);
       }
@@ -93,7 +94,8 @@ export default function NuevoUsuario(props) {
           process.env.REACT_APP_INITIAL_PATH + "/api/users/",
           updateUser
         );
-        mostrarMensaje("Usuario Grabado Exitosamente");
+      
+        volverUsers();
       } catch (err) {
         mostrarMensaje("Fallo al grabar Usuario: ", err);
       }
