@@ -56,3 +56,12 @@
 
     color: var (--black);
   }
+
+  .mensajeLogin {
+    margin-top: 20px;
+    background: var(--tarjeta);
+    width: auto;
+    height: 20px;;
+    color: var(--white);
+    text-align: center;
+  }

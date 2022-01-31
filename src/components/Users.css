@@ -4,13 +4,31 @@
     margin: 10px;
     padding: 10px;
     top: 20px;
+    width: 90%;
 }
 
 .usuariosLinea{
 
     display: grid;
-    grid-template-columns: 1fr 0.2fr 0.2fr;
+    grid-template-columns: 2fr 0.2fr 0.2fr;
+    align-items: left;
+    margin-top: 15px;
+ 
+
+
+}
+
+.usuarioDatos {
+
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 0.5fr;
     align-items:center;
 
+
+}
+
+.oscuro {
+    font-weight: bold;
+    color: var(--darkgray);
 
 }

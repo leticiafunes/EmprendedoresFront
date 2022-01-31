@@ -19,7 +19,7 @@ export default function Emprendedores({ setNavigationStatus }) {
   const [busqueda, setBusqueda] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [emprendedor, setEmprendedor] = useState("");
-  const { session, handleSession, closeSession } = useContext(SessionContext); //Para leer la Session  global
+  const { session } = useContext(SessionContext); //Para leer la Session  global
 
   useEffect(() => {
     obtenerDatos();
@@ -81,13 +81,11 @@ export default function Emprendedores({ setNavigationStatus }) {
   };
 
   const botonEditar = () => {
-    {
-      if (session.username) {
-        return "btn btn-outline-secondary  btn-sm";
-      }
-
-      return "btn btn-outline-secondary  btn-sm oculto";
+    if (session.username) {
+      return "btn btn-outline-secondary  btn-sm";
     }
+
+    return "btn btn-outline-secondary  btn-sm oculto";
   };
 
   return (
@@ -112,6 +110,7 @@ export default function Emprendedores({ setNavigationStatus }) {
             id="input-buscar"
             value={busqueda}
             onChange={handleChange}
+            alt="Agregar Emprendedor"
           />
 
           <div id="icono-buscar">
@@ -128,7 +127,7 @@ export default function Emprendedores({ setNavigationStatus }) {
               <button
                 className="iconoAgregar"
                 alt="Agregar Emprendedor"
-                title="Agregar un nuevo Emprendedor"
+                title="Nuevo Emprendedor"
               >
                 <i className="fas fa-plus"></i>
               </button>

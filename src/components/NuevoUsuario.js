@@ -8,25 +8,19 @@ import { useNavigate, useParams } from "react-router-dom"; //hook
 
 import "./Login.css";
 
-
-
-
-
-
 export default function NuevoUsuario(props) {
-  
   const [edit, setEdit] = useState({ editing: false, id: "" });
 
-  const {session, handleSession} = useContext(SessionContext) //Para leer la Session  global
+  const { session, handleSession } = useContext(SessionContext); //Para leer la Session  global
 
-  const [login, setLogin]  = useState("");
+  const [login, setLogin] = useState("");
 
   const [user, setUser] = useState({
     username: "",
     password: "",
     nivel: 0,
     nombre: "",
-    apellido: ""
+    apellido: "",
   });
 
   const navigate = useNavigate();
@@ -34,36 +28,30 @@ export default function NuevoUsuario(props) {
   const { id } = useParams(); //Para ver que user tengo que editar
 
   useEffect(() => {
-   
     const obtenerDatos = async () => {
-
-      if(id) {
-      
+      if (id) {
         const res = await axios.get(
-          process.env.REACT_APP_INITIAL_PATH + "/api/users/"+ id 
+          process.env.REACT_APP_INITIAL_PATH + "/api/users/" + id
         );
-  
+
         if (res.data) {
           const user = res.data;
-  
+
           setUser({
             ...user,
             username: user.username,
             password: user.password,
             nivel: user.nivel,
             nombre: user.nombre,
-            apellido: user.apellido
+            apellido: user.apellido,
           });
-          
+
           setEdit({ ...edit, editing: true, _id: id });
         }
-  
       }
-    }
+    };
     obtenerDatos();
   }, []);
-
-
 
   const updateUser = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -73,12 +61,9 @@ export default function NuevoUsuario(props) {
     setUser({ ...user, [e.target.name]: e.target.checked });
   };
 
-
-
   const mostrarMensaje = (mensaje) => {
     alert(mensaje);
-  }
-
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -89,167 +74,156 @@ export default function NuevoUsuario(props) {
       password: user.password,
       nivel: user.nivel,
       nombre: user.nombre,
-      apellido: user.apellido
+      apellido: user.apellido,
     };
 
     if (edit.editing) {
-
       try {
         await axios.put(
           process.env.REACT_APP_INITIAL_PATH + "/api/users/" + edit._id,
           updateUser
         );
-        mostrarMensaje ('Usuario Editado Exitosamente');
-       } catch (err) {
-        mostrarMensaje ('Fallo al grabar Usuario: ', err);
-       
-       }
-   
+        mostrarMensaje("Usuario Editado Exitosamente");
+      } catch (err) {
+        mostrarMensaje("Fallo al grabar Usuario: ", err);
+      }
     } else {
-      try{
-      await axios.post(
-        process.env.REACT_APP_INITIAL_PATH + "/api/users/",
-        updateUser
+      try {
+        await axios.post(
+          process.env.REACT_APP_INITIAL_PATH + "/api/users/",
+          updateUser
         );
-        mostrarMensaje ('Usuario Grabado Exitosamente');
-       } catch (err) {
-        mostrarMensaje ('Fallo al grabar Usuario: ', err);
-       
-       }
+        mostrarMensaje("Usuario Grabado Exitosamente");
+      } catch (err) {
+        mostrarMensaje("Fallo al grabar Usuario: ", err);
+      }
     }
-
-   
   };
 
   const volverUsers = () => {
-    navigate('/user');
-  }
-
+    navigate("/user");
+  };
 
   return (
-  <div >
-  <form className="formCrearUser" onSubmit={onSubmit}>
-    <div className= "tituloCrearUserContainer">
-      <div className="titulo"> {edit.editing && <p>Editar usuario</p>}</div>
-      <div className="titulo"> {!edit.editing && <p>Nuevo usuario</p>}</div>
+    <div>
+      <form className="formCrearUser" onSubmit={onSubmit}>
+        <div className="tituloCrearUserContainer">
+          <div className="titulo">
+            {" "}
+            {edit.editing ? <p>Editar usuario</p> : <p>Nuevo usuario</p>}
+          </div>
 
-      <div className="btnVolver">
-          <label className="col-sm-6 col-form-label oscuro">
-            Volver
+          <div className="btnVolver">
+            <label className="col-sm-6 col-form-label oscuro">Volver</label>
+
+            <button type="button" className="icono " onClick={volverUsers}>
+              <i className="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <div className="row mb-4">
+          <label htmlFor="nombre_id" className="col-sm-4 col-form-label oscuro">
+            Nombre de Usuario
           </label>
 
-          <button type="button" className="icono " onClick={volverUsers}>
-             <i className="fas fa-arrow-right"></i>
+          <div className="col-sm-8">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="userName"
+              name="username"
+              onChange={updateUser}
+              value={user.username}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="row mb-3">
+          <label htmlFor="nombre_id" className="col-sm-4 col-form-label oscuro">
+            Password
+          </label>
+
+          <div className="col-sm-8">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Password"
+              name="password"
+              onChange={updateUser}
+              value={user.password}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="row mb-3">
+          <label htmlFor="nombre_id" className="col-sm-4 col-form-label oscuro">
+            Nombre
+          </label>
+
+          <div className="col-sm-8">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Nombre"
+              name="nombre"
+              onChange={updateUser}
+              value={user.nombre}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="row mb-3">
+          <label htmlFor="nombre_id" className="col-sm-4 col-form-label oscuro">
+            Apellido
+          </label>
+
+          <div className="col-sm-8">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Apellido"
+              name="apellido"
+              onChange={updateUser}
+              value={user.apellido}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="row mb-3">
+          <label htmlFor="nombre_id" className="col-sm-4 col-form-label oscuro">
+            Nivel
+          </label>
+
+          <div className="col-sm-8">
+            <select
+              className="form-control"
+              name="nivel"
+              value={user.nivel}
+              onChange={updateUser}
+              required
+            >
+              <option> 0 </option>
+              <option> 1 </option>
+              <option> 2 </option>
+              <option> 3 </option>
+            </select>
+          </div>
+        </div>
+
+        <div className="grabarUserContainer">
+          <button type="submit" className="grabarUser">
+            Guardar
           </button>
-      </div>
-  
+          <button type="button" className="cancelarUser" onClick={volverUsers}>
+            Cancelar
+          </button>
+        </div>
+      </form>
     </div>
-      
-
-
-      <div className="row mb-4">
-        <label htmlFor="nombre_id" className="col-sm-4 col-form-label oscuro">
-          Nombre de Usuario
-        </label>
-
-        <div className="col-sm-8">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="userName"
-            name="username"
-            onChange={updateUser}
-            value={user.username}
-            required
-          />
-        </div>
-      </div>
-
-      <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-4 col-form-label oscuro">
-          Password
-        </label>
-
-        <div className="col-sm-8">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Password"
-            name="password"
-            onChange={updateUser}
-            value={user.password}
-            required
-          />
-        </div>
-      </div>
-
-      <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-4 col-form-label oscuro">
-          Nombre
-        </label>
-
-        <div className="col-sm-8">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Nombre"
-            name="nombre"
-            onChange={updateUser}
-            value={user.nombre}
-            required
-          />
-        </div>
-      </div>
-
-      <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-4 col-form-label oscuro">
-          Apellido
-        </label>
-
-        <div className="col-sm-8">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Apellido"
-            name="apellido"
-            onChange={updateUser}
-            value={user.apellido}
-            required
-          />
-        </div>
-      </div>
-
-      <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-4 col-form-label oscuro">
-          Nivel
-        </label>
-
-        <div className="col-sm-8">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Nivel"
-            name="nivel"
-            onChange={updateUser}
-            value={user.nivel}
-            required
-          />
-        </div>
-      </div>
-
-  
-     
-
-      <div className="grabarUserContainer">
-        <button type="submit" className="grabarUser">
-          Guardar
-        </button>
-        <button type="button" className="cancelarUser" onClick={volverUsers}>
-          Cancelar
-        </button>
-        
-      </div>
-    </form>
-  </div>
   );
 }

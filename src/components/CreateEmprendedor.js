@@ -6,9 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import "./CreateEmprendedor.css";
 
-
 export default function CreateEmprendedor(props) {
   const [edit, setEdit] = useState({ editing: false, id: "" });
+  const [mensaje, setMensaje] = useState("");
 
   const [emprendedor, setEmprendedor] = useState({
     nombre: "",
@@ -25,8 +25,6 @@ export default function CreateEmprendedor(props) {
   });
 
   const navigate = useNavigate();
-
-
 
   const { id } = useParams(); //Para ver que emprendedor tengo que editar
 
@@ -61,9 +59,7 @@ export default function CreateEmprendedor(props) {
     };
 
     obtenerDatos();
-
-    //hay error al leeer las redes almacenadas ya. Probar crear uno nueo
-  }, []);
+  });
 
   const updateEmprendedor = (e) => {
     setEmprendedor({ ...emprendedor, [e.target.name]: e.target.value });
@@ -73,12 +69,13 @@ export default function CreateEmprendedor(props) {
     setEmprendedor({ ...emprendedor, [e.target.name]: e.target.checked });
   };
 
+  const cambiarMensaje = (mensaje) => {
+    setMensaje(mensaje);
+  };
 
-
-  const mostrarMensaje = (mensaje) => {
-    alert(mensaje);
-  }
-
+  const mostrarMensaje = () => {
+    return <p>{mensaje}</p>;
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -98,48 +95,36 @@ export default function CreateEmprendedor(props) {
     };
 
     if (edit.editing) {
-
       try {
         await axios.put(
           process.env.REACT_APP_INITIAL_PATH + "/api/emprendedores/" + edit._id,
           updateEmprendedor
         );
-        mostrarMensaje ('Emprendedor Grabado Exitosamente');
-       } catch (err) {
-        mostrarMensaje ('Fallo al grabar Emprendedor: ', err);
-       
-       }
-   
+        volverEmprendedores();
+      } catch (err) {
+        cambiarMensaje("No se pudo crear el Emprendedor: ", err);
+      }
     } else {
-      try{
-      await axios.post(
-        process.env.REACT_APP_INITIAL_PATH + "/api/emprendedores/",
-        updateEmprendedor
+      try {
+        await axios.post(
+          process.env.REACT_APP_INITIAL_PATH + "/api/emprendedores/",
+          updateEmprendedor
         );
-        mostrarMensaje ('Emprendedor Grabado Exitosamente');
-       } catch (err) {
-        mostrarMensaje ('Fallo al grabar Emprendedor: ', err);
-       
-       }
+        volverEmprendedores();
+      } catch (err) {
+        cambiarMensaje("No se pudo grabar el Emprendedor: ", err);
+      }
     }
-
-   
   };
 
   const openWidget = () => {
-    console.log (process.env.REACT_APP_CLOUDINARY_CLOUDNAME);
     var myWidget = window.cloudinary.createUploadWidget(
-    
-       
-
       {
         cloudName: process.env.REACT_APP_CLOUDINARY_CLOUDNAME,
-        uploadPreset:  process.env.REACT_APP_CLOUDINARY_UPLOADPRESET
+        uploadPreset: process.env.REACT_APP_CLOUDINARY_UPLOADPRESET,
       },
       (error, result) => {
         if (!error && result && result.event === "success") {
-          mostrarMensaje ("La imagen subió correctamente. Aquí está el link: " + result.info.secure_url)
-         
           const imageurl = result.info.secure_url;
 
           setEmprendedor({ ...emprendedor, imagen: imageurl });
@@ -189,314 +174,331 @@ export default function CreateEmprendedor(props) {
     }
   };
 
-
   const volverEmprendedores = () => {
-    navigate('/emprendedores')
-  }
-
+    navigate("/emprendedores");
+  };
 
   return (
-    <form className="formCrearEmprendedor" onSubmit={onSubmit}>
-      <div className= "tituloCrearEmprendedorContainer">
-      <div className="titulo"> {edit.editing && <p>Editar Emprendedor</p>}</div>
-      <div className="titulo"> {!edit.editing && <p>Crear Emprendedor</p>}</div>
-
-      <div className="btnVolver">
-          <label className="col-sm-6 col-form-label oscuro">
-            Volver
-          </label>
-
-          <button type="button" className="icono " onClick={volverEmprendedores}>
-             <i className="fas fa-arrow-right"></i>
-          </button>
-      </div>
-      </div>
-      
-
-
-      <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
-          Nombre
-        </label>
-
-        <div className="col-sm-10">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="nombre"
-            name="nombre"
-            onChange={updateEmprendedor}
-            value={emprendedor.nombre}
-            required
-          />
-        </div>
-      </div>
-
-      <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
-          Empresa
-        </label>
-
-        <div className="col-sm-10">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Nombre del emprendimiento"
-            name="nombre_emprendimiento"
-            onChange={updateEmprendedor}
-            value={emprendedor.nombre_emprendimiento}
-            required
-          />
-        </div>
-      </div>
-
-      <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
-          Rubro
-        </label>
-
-        <div className="col-sm-10">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Rubro del emprendimiento"
-            name="rubro"
-            onChange={updateEmprendedor}
-            value={emprendedor.rubro}
-            required
-          />
-        </div>
-      </div>
-
-      <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
-          Descripción
-        </label>
-
-        <div className="col-sm-10">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Descripción Corta"
-            name="descripcioncorta"
-            onChange={updateEmprendedor}
-            value={emprendedor.descripcioncorta}
-            required
-          />
-        </div>
-      </div>
-
-      <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
-          Reseña
-        </label>
-
-        <div className="col-sm-10">
-          <textarea
-            name="resena"
-            className="form-control"
-            placeholder="Reseña del emprendimiento"
-            onChange={updateEmprendedor}
-            value={emprendedor.resena}
-            required
-          />
-        </div>
-      </div>
-
-      <div className="mb-3">
-        <div className="form-check form-switch">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            placeholder="Activo"
-            name="activo"
-            onChange={updateEmprendedorActivo}
-            value={emprendedor.activo}
-            required
-            id="activo"
-            checked={emprendedor.activo}
-          />
-          <label className="form-check-label oscuro" htmlFor="activo">
-            Activo
-          </label>
-        </div>
-      </div>
-
-      <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
-          Tags
-        </label>
-
-        <div className="col-sm-10">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Tags"
-            name="tags"
-            onChange={updateEmprendedor}
-            value={emprendedor.tags}
-            required
-          />
-        </div>
-      </div>
-
-      <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
-          Teléfono
-        </label>
-
-        <div className="col-sm-10">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Teléfono"
-            name="telefono"
-            onChange={updateEmprendedor}
-            value={emprendedor.telefono}
-            required
-          />
-        </div>
-      </div>
-
-      <div className="row mb-3">
-        <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
-          Mail
-        </label>
-
-        <div className="col-sm-10">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Mail"
-            name="mail"
-            onChange={updateEmprendedor}
-            value={emprendedor.mail}
-            required
-          />
-        </div>
-      </div>
-
-      <div className="row mb-3">
-        <div className="col-sm-2">
-          <label htmlFor="nombre_id" className="col-sm-6 col-form-label oscuro">
-            Logo
-          </label>
-
-          <button type="button" className="icono " onClick={openWidget}>
-            <FontAwesomeIcon icon={faSearch} />
-          </button>
-        </div>
-
-        <div className="col-sm-10">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Logo del Emprendimiento"
-            name="imagen"
-            onChange={updateEmprendedor}
-            value={emprendedor.imagen}
-            required
-          />
-        </div>
-      </div>
-
-      {emprendedor.redes &&
-        emprendedor.redes.map((red, indice) => (
-          <div className="row mb-3" key={indice}>
-            {indice === 0 && (
-              <div className="col-sm-2">
-                <label
-                  htmlFor="nombre_id"
-                  className="col-sm-6 col-form-label oscuro"
-                >
-                  Redes
-                </label>
-
-                <button type="button" type="button" onClick={agregarRed} className="icono">
-                  <i className="fas fa-plus"></i>
-                </button>
-              </div>
+    <div>
+      {mensaje && <div className="mensajeLogin">{mostrarMensaje()}</div>}
+      <form className="formCrearEmprendedor" onSubmit={onSubmit}>
+        <div className="tituloCrearEmprendedorContainer">
+          <div className="titulo">
+            {" "}
+            {edit.editing ? (
+              <p>Editar Emprendedor</p>
+            ) : (
+              <p>Nuevo Emprendedor</p>
             )}
+          </div>
 
-            {indice > 0 && (
-              <div className="col-sm-2">
-                <label
-                  htmlFor="nombre_id"
-                  className="col-sm-6 col-form-label"
-                ></label>
+          <div className="btnVolver">
+            <label className="col-sm-6 col-form-label oscuro">Volver</label>
 
-                <button onClick={agregarRed} type="button"></button>
-              </div>
-            )}
+            <button
+              type="button"
+              className="icono "
+              onClick={volverEmprendedores}
+            >
+              <i className="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
 
-            <div className="col-sm-10">
-              <div className="row mb-3">
-                <div className="col-sm-1">
-                  <button className="icono" type="button" onClick={() => borrarRed(indice)}>
-                    <i className="fas fa-times"></i>
+        <div className="row mb-3">
+          <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
+            Nombre
+          </label>
+
+          <div className="col-sm-10">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="nombre"
+              name="nombre"
+              onChange={updateEmprendedor}
+              value={emprendedor.nombre}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="row mb-3">
+          <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
+            Empresa
+          </label>
+
+          <div className="col-sm-10">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Nombre del emprendimiento"
+              name="nombre_emprendimiento"
+              onChange={updateEmprendedor}
+              value={emprendedor.nombre_emprendimiento}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="row mb-3">
+          <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
+            Rubro
+          </label>
+
+          <div className="col-sm-10">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Rubro del emprendimiento"
+              name="rubro"
+              onChange={updateEmprendedor}
+              value={emprendedor.rubro}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="row mb-3">
+          <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
+            Descripción
+          </label>
+
+          <div className="col-sm-10">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Descripción Corta"
+              name="descripcioncorta"
+              onChange={updateEmprendedor}
+              value={emprendedor.descripcioncorta}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="row mb-3">
+          <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
+            Reseña
+          </label>
+
+          <div className="col-sm-10">
+            <textarea
+              name="resena"
+              className="form-control"
+              placeholder="Reseña del emprendimiento"
+              onChange={updateEmprendedor}
+              value={emprendedor.resena}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="mb-3">
+          <div className="form-check form-switch">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              placeholder="Activo"
+              name="activo"
+              onChange={updateEmprendedorActivo}
+              value={emprendedor.activo}
+              required
+              id="activo"
+              checked={emprendedor.activo}
+            />
+            <label className="form-check-label oscuro" htmlFor="activo">
+              Activo
+            </label>
+          </div>
+        </div>
+
+        <div className="row mb-3">
+          <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
+            Tags
+          </label>
+
+          <div className="col-sm-10">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Tags"
+              name="tags"
+              onChange={updateEmprendedor}
+              value={emprendedor.tags}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="row mb-3">
+          <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
+            Teléfono
+          </label>
+
+          <div className="col-sm-10">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Teléfono"
+              name="telefono"
+              onChange={updateEmprendedor}
+              value={emprendedor.telefono}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="row mb-3">
+          <label htmlFor="nombre_id" className="col-sm-2 col-form-label oscuro">
+            Mail
+          </label>
+
+          <div className="col-sm-10">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Mail"
+              name="mail"
+              onChange={updateEmprendedor}
+              value={emprendedor.mail}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="row mb-3">
+          <div className="col-sm-2">
+            <label
+              htmlFor="nombre_id"
+              className="col-sm-6 col-form-label oscuro"
+            >
+              Logo
+            </label>
+
+            <button type="button" className="icono " onClick={openWidget}>
+              <FontAwesomeIcon icon={faSearch} />
+            </button>
+          </div>
+
+          <div className="col-sm-10">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Logo del Emprendimiento"
+              name="imagen"
+              onChange={updateEmprendedor}
+              value={emprendedor.imagen}
+              required
+            />
+          </div>
+        </div>
+
+        {emprendedor.redes &&
+          emprendedor.redes.map((red, indice) => (
+            <div className="row mb-3" key={indice}>
+              {indice === 0 && (
+                <div className="col-sm-2">
+                  <label
+                    htmlFor="nombre_id"
+                    className="col-sm-6 col-form-label oscuro"
+                  >
+                    Redes
+                  </label>
+
+                  <button type="button" onClick={agregarRed} className="icono">
+                    <i className="fas fa-plus"></i>
                   </button>
                 </div>
+              )}
 
-                <div className="col-sm-3">
-                  <select
-                    className="form-control"
-                    name={indice}
-                    value={emprendedor.redes[indice].nombre}
-                    onChange={onRedChangeNombre}
-                    required
-                  >
-                    <option value="Red" name="red">
-                      {" "}
-                      Red{" "}
-                    </option>
-                    <option value="Web" name="facebook">
-                      {" "}
-                      Web{" "}
-                    </option>
-                    <option value="Facebook" name="facebook">
-                      {" "}
-                      Facebook{" "}
-                    </option>
-                    <option value="Instagram" name="instagram">
-                      {" "}
-                      Instagram{" "}
-                    </option>
-                    <option value="Twiter" name="twiter">
-                      {" "}
-                      Twiter{" "}
-                    </option>
-                    <option value="Otro" name="otro">
-                      {" "}
-                      Otro{" "}
-                    </option>
-                  </select>
+              {indice > 0 && (
+                <div className="col-sm-2">
+                  <label
+                    htmlFor="nombre_id"
+                    className="col-sm-6 col-form-label"
+                  ></label>
+
+                  <button onClick={agregarRed} type="button"></button>
                 </div>
+              )}
 
-                <div className="col-sm-8">
-                  <input
-                    type="text"
-                    className="form-control "
-                    placeholder="Redes"
-                    name={indice}
-                    onChange={onRedChangeLink}
-                    value={emprendedor.redes[indice].link}
-                    required
-                  />
+              <div className="col-sm-10">
+                <div className="row mb-3">
+                  <div className="col-sm-1">
+                    <button
+                      className="icono"
+                      type="button"
+                      onClick={() => borrarRed(indice)}
+                    >
+                      <i className="fas fa-times"></i>
+                    </button>
+                  </div>
+
+                  <div className="col-sm-3">
+                    <select
+                      className="form-control"
+                      name={indice}
+                      value={emprendedor.redes[indice].nombre}
+                      onChange={onRedChangeNombre}
+                      required
+                    >
+                      <option value="Red" name="red">
+                        {" "}
+                        Red{" "}
+                      </option>
+                      <option value="Web" name="web">
+                        {" "}
+                        Web{" "}
+                      </option>
+                      <option value="Facebook" name="facebook">
+                        {" "}
+                        Facebook{" "}
+                      </option>
+                      <option value="Instagram" name="instagram">
+                        {" "}
+                        Instagram{" "}
+                      </option>
+                      <option value="Twiter" name="twiter">
+                        {" "}
+                        Twiter{" "}
+                      </option>
+                      <option value="Otro" name="otro">
+                        {" "}
+                        Otro{" "}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div className="col-sm-8">
+                    <input
+                      type="text"
+                      className="form-control "
+                      placeholder="Redes"
+                      name={indice}
+                      onChange={onRedChangeLink}
+                      value={emprendedor.redes[indice].link}
+                      required
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
 
-      <div className="grabarEmprendedorContainer">
-        <button type="submit" className="grabarEmprendedor">
-          Guardar
-        </button>
-        <button type="button" className="cancelarEmprendedor" onClick={volverEmprendedores}>
-          Cancelar
-        </button>
-        
-      </div>
-    </form>
+        <div className="grabarEmprendedorContainer">
+          <button type="submit" className="grabarEmprendedor">
+            Guardar
+          </button>
+          <button
+            type="button"
+            className="cancelarEmprendedor"
+            onClick={volverEmprendedores}
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }

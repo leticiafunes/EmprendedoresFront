@@ -18,29 +18,13 @@
   text-align: center;
 }
 
-#modal .containerModal {
-  position: fixed;
-  width: 100%;
-  height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 5px;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.7);
-}
-
 
 .modal {
-  position: fixed;
   
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 90%;
-  height: 100%;
-  margin: auto;
   background: rgba(0, 0, 0, 0.7);
   border-radius: 5px;
   animation: animate 0.3s;
@@ -211,7 +195,7 @@
  
   background: var(--white);
   cursor: default;
-  width: 90%;
+  width: 85%;
   height:90%;
   overflow:auto;
  
@@ -219,16 +203,14 @@
 
 }
 
+
+
+
+
 @media screen and (min-width: 820px) {
   
-  
-  .botonCerrar {
-    visibility: hidden;
-  }
 
-  .botonCerrarAncho {
-    visibility: visible;
-  }
+
 
   .resenaContainer {
     grid-template-columns: 1fr 0.1fr;

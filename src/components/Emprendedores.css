@@ -41,6 +41,7 @@ body {
   margin: 0px;
   padding: 0px;
   top: 0px;
+  width: 100%;
 
 }
 
@@ -50,7 +51,7 @@ body {
   background: var(--ligthgray);
   align-items: center;
   padding: 0px;
-  margin: opx;
+  margin: 0px;
 }
 
 .btnBuscarContainer {

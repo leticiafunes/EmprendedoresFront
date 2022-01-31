@@ -1,14 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; //para crear Rutas en el SPA
 import { useState } from "react";
-//import 'bootstrap/dist/css/bootstrap.min.css'
+
 
 import "./App.css";
-
 import Navigation from "./components/Navegacion";
-import CreateNote from "./components/CreateNote";
 import Users from "./components/Users";
-import NotesList from "./components/NotesList";
 import Emprendedores from "./components/Emprendedores";
 import CreateEmprendedor from "./components/CreateEmprendedor";
 import Login from "./components/Login";
@@ -36,10 +33,6 @@ function App() {
           <Routes>
             <Route path="/" element={<Emprendedores setNavigationStatus={setNavigationStatus} /> } />
 
-            <Route path="/edit/:id" element={<CreateNote />} />
-
-            <Route path="/create" element={<CreateNote />} />
-
             <Route path="/user" element={<Users />} />
             
             <Route path="/login" element={<Login />} />
@@ -61,6 +54,7 @@ function App() {
               element={<CreateEmprendedor />}
             />
 
+
               <Route
               path="/user/create"
               element={<NuevoUsuario />}
@@ -74,6 +68,9 @@ function App() {
 
           </Routes>
         </div>
+
+
+
       </Router>
     
     </LanguageProvider>
