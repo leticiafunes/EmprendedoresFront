@@ -70,43 +70,36 @@ export default function Users() {
     <div className="pantallaUsuarios">
       <h1>Usuarios</h1>
 
-      <div className="col-md-12">
-        <ul className="list-group">
-          <li className="usuariosLinea">
-            <div className="usuarioDatos">
-              <div className="oscuro"> Nombre y Apellido</div>
-              <div className="oscuro"> Nombre de Usuario</div>
-              <div className="oscuro"> Clave</div>
-              <div className="oscuro">Nivel</div>
-            </div>
-          </li>
-          {users.map((user) => (
-            <li
-              className="usuariosLinea"
-              key={user._id}
-              onDoubleClick={() => borrarUser(user._id)}
-            >
-              <div className="usuarioDatos">
-                <div>
-                  {user.nombre} {user.apellido}
-                </div>
-                <div>{user.username}</div>
-                <div>{user.password}</div>
-                <div>{user.nivel} </div>
-              </div>
-
-              <div className="editarEmprendedorCoontainer">
-                <Link
+      <div className = "grillaUsuarios">
+          
+        
+        <div className="tituloGrillaUser"> Nombre y Apellido</div>
+        <div className="tituloGrillaUser"> Nombre de Usuario</div>
+        <div className="tituloGrillaUser"> Clave</div>
+        <div className="tituloGrillaUser">Nivel</div>
+        <div className="tituloGrillaUser">Ed.</div>
+        <div className="tituloGrillaUser">El.</div>
+        </div>
+        {users.map( (user) => (
+           
+           <div className = "grillaUsuarios">
+     
+                <div className="lineaUser"> {user.nombre} {user.apellido}</div>
+                <div className="lineaUser">{user.username}</div>
+                <div className="lineaUser">{user.password}</div>
+                <div className="lineaUser">{user.nivel} </div>
+                <div className="editarEmprendedorContainer">
+                  <Link
                   className={botonEditar()}
                   title="Editar Usuario"
                   to={"/user/edit/" + user._id}
                 >
                   <i className="fas fa-user-edit"></i>
                 </Link>
-              </div>
-
+                 </div>
+             
               {session.username && (
-                <div className="editarEmprendedorCoontainer">
+                <div className="editarEmprendedorContainer">
                   <button
                     type="button"
                     className="icono "
@@ -116,10 +109,19 @@ export default function Users() {
                   </button>
                 </div>
               )}
-            </li>
+           
+           </div>
           ))}
-        </ul>
+   
+
+ 
+      
+     
+       
+         
+
+
       </div>
-    </div>
+  
   );
 }

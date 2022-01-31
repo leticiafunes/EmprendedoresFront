@@ -67,18 +67,7 @@ export default function Navegacion({ navigationStatus, setNavigationStatus }) {
         <ul
           className={click && navigationStatus ? "nav-menu active" : "nav-menu"}
         >
-      
-
-          {session.username && (
-            <li className="item-lista">
-              <Link className="nav-links" to="/user" onClick={closeMobileMenu}>
-                {" "}
-                Usuarios{" "}
-              </Link>
-            </li>
-          )}
-
-          {session.username && (
+            {session.username && (
             <li className="item-lista">
               <Link
                 className="nav-links"
@@ -90,6 +79,17 @@ export default function Navegacion({ navigationStatus, setNavigationStatus }) {
               </Link>
             </li>
           )}
+
+          {session.username && (
+            <li className="item-lista">
+              <Link className="nav-links" to="/user" onClick={closeMobileMenu}>
+                {" "}
+                Usuarios{" "}
+              </Link>
+            </li>
+          )}
+
+    
 
           {session.username && (
             <li className="item-lista">

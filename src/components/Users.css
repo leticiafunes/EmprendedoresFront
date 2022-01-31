@@ -7,10 +7,10 @@
     width: 90%;
 }
 
-.usuariosLinea{
+.grillaUsuarios{
 
     display: grid;
-    grid-template-columns: 2fr 0.2fr 0.2fr;
+    grid-template-columns: 250px 180px 150px 70px 70px 70px;
     align-items: left;
     margin-top: 15px;
  
@@ -18,17 +18,27 @@
 
 }
 
-.usuarioDatos {
 
-    display: grid;
-    grid-template-columns: 2fr 2fr 1fr 0.5fr;
-    align-items:center;
+.tituloGrillaUser {
 
-
+    color: var (--darkgray);
+    font-weight: bold;
 }
+
 
 .oscuro {
     font-weight: bold;
-    color: var(--darkgray);
+}
 
+
+.lineaUser {
+   
+    color: var(--darkgray);
+    
+
+}
+
+.editarEmprendedorContainer {
+    align-items: left;
+    margin: 0px;
 }
