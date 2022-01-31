@@ -5,6 +5,7 @@
     padding: 10px;
     top: 20px;
     width: 90%;
+    overflow-x: scroll;
 }
 
 .grillaUsuarios{
